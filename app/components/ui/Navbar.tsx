@@ -74,7 +74,7 @@ const Navbar = () => {
   // ];
 
   return (
-    <nav className="w-full bg-primary shadow-lg px-4 py-3 z-50 font-main text-navText sticky top-0 border-b border-b-amber-400 border-secondary">
+    <nav className="w-full sticky top-0 z-50 px-4 py-3 font-main text-navText border-b border-b-amber-400 border-secondary bg-primary/30 backdrop-blur-md shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Left Section */}
         <div className="flex items-center space-x-8">

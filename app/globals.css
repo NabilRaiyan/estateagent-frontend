@@ -1,26 +1,195 @@
-@import "tailwindcss";
+@import "tailwindcss";  /* Only if you need to import Tailwind, otherwise remove */
 
+
+
+/* Ensure fonts are correctly applied */
+
+html{
+  scroll-behavior: smooth;
+}
+
+/* Root Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #ffffff;          /* rgb(3, 6, 22) */
+  --secondary: #fcb37f;        /* rgb(20, 48, 45) */
+  --button: #ff9627;           /* rgb(100, 217, 138) */
+  --navText: #151515;          /* rgb(147, 168, 183) */
+  --white: #ffffff;
+  --font-main: var(--font-space);  /* Reference to the imported Space_Grotesk font */
+  --font-second: var(--font-work); /* Reference to the imported Work_Sans font */
+  --font-third: var(--font-almendra);
+  --font-gothic: 'MedievalSharp', cursive;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Global Styles */
+body {
+  background: var(--primary);
+  color: var(--primary);
+  font-family: var(--font-main), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.font-gothic {
+  font-family: var(--font-gothic);
+}
+
+.font-main {
+  font-family: var(--font-main);
+}
+
+.font-second {
+  font-family: var(--font-second);
+}
+
+
+/* Global Styles */
+body {
+  background: var(--primary);
+  color: var(--primary);
+}
+
+/* Background Colors */
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-button {
+  background-color: var(--button);
+}
+
+/* Text Colors */
+.text-navText {
+  color: var(--navText);
+}
+
+.text-button {
+  color: var(--button);
+}
+
+.text-white {
+  color: var(--white);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 1000px; opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-20px); }
+  60% { transform: translateY(-10px); }
+}
+
+@keyframes scrollPulse {
+  0% { transform: translateY(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(8px); opacity: 0; }
+}
+
+/* Animation Classes */
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+.animate-scrollPulse {
+  animation: scrollPulse 1.5s infinite;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.clip-hexagon {
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+}
+
+@keyframes blink-shadow {
+  0% {
+    box-shadow: 0 0 11px 2px rgba(16, 185, 129, 0.3); /* Emerald */
+  }
+  25% {
+    box-shadow: 0 0 11px 2px rgba(249, 158, 11, 0.3); /* Amber */
+  }
+  50% {
+    box-shadow: 0 0 11px 2px rgba(131, 24, 255, 0.3); /* Purple */
+  }
+  75% {
+    box-shadow: 0 0 11px 2px rgba(20, 184, 166, 0.3); /* Teal */
+  }
+  100% {
+    box-shadow: 0 0 11px 2px rgba(16, 185, 129, 0.3); /* Emerald */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-blink {
+  animation: blink-shadow 3s ease-in-out infinite;
+}
+
+
+/* Bubble animation */
+.bubble {
+  position: absolute;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.7),
+    rgba(0, 200, 255, 0.2)
+  );
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+              inset 0 0 5px rgba(255, 255, 255, 0.9);
+  animation: floatBubble 12s ease-in-out infinite;
+  filter: drop-shadow(0 0 3px rgba(0, 200, 255, 0.5));
+  opacity: 0.7;
+  width: 20px; /* adjust size as needed */
+  height: 20px;
+}
+
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px) scale(1.1);
+    opacity: 1;
+  }
 }

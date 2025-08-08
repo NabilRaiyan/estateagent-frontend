@@ -1,349 +1,317 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import TerminalIcon from '@mui/icons-material/Terminal';
-import DataObjectIcon from '@mui/icons-material/DataObject';
-import StorageIcon from '@mui/icons-material/Storage';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import PsychologyIcon from '@mui/icons-material/Psychology';
-import CampaignIcon from '@mui/icons-material/Campaign';
-// import ArticleIcon from '@mui/icons-material/Article';
-// import MovieIcon from '@mui/icons-material/Movie';
-// import DiamondIcon from '@mui/icons-material/Diamond';
-import Image from 'next/image';
+import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Menu from '@mui/icons-material/Menu';
+import Close from '@mui/icons-material/Close';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import Image from "next/image";
+
+const menuData = [
+  // ... your existing menuData unchanged ...
+  {
+    label: "Buy",
+    items: [
+      [
+        { label: "Homes for sale", href: "/buy/homes-for-sale" },
+        { label: "Foreclosures", href: "/buy/foreclosures" },
+        { label: "For sale by owner", href: "/buy/fsbo" },
+        { label: "Open houses", href: "/buy/open-houses" },
+      ],
+      [
+        { label: "New construction", href: "/buy/new-construction" },
+        { label: "Coming soon", href: "/buy/coming-soon" },
+        { label: "Recent home sales", href: "/buy/recent-sales" },
+        { label: "All homes", href: "/buy/all-homes" },
+      ],
+      {
+        title: "Resources",
+        children: [
+          { label: "Home Buying Guide", href: "/buy/resources/guide" },
+          { label: "Foreclosure Center", href: "/buy/resources/foreclosure-center" },
+          { label: "Real Estate App", href: "/buy/resources/app" },
+          { label: "Down Payment Assistance", href: "/buy/resources/down-payment" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Rent",
+    items: [
+      [
+        { label: "Apartments for rent", href: "/rent/apartments" },
+        { label: "Houses for rent", href: "/rent/houses" },
+        { label: "All rental listings", href: "/rent/all-listings" },
+        { label: "All rental buildings", href: "/rent/buildings" },
+      ],
+      {
+        title: "Your Search",
+        children: [
+          { label: "Saved searches", href: "/rent/saved" },
+          { label: "Inbox", href: "/rent/inbox" },
+          { label: "Contacted rentals", href: "/rent/contacted" },
+          { label: "Applications", href: "/rent/applications" },
+        ],
+      },
+      {
+        title: "Resources",
+        children: [
+          { label: "Rent with Zillow", href: "/rent/resources/rent-with-zillow" },
+          { label: "Build your credit", href: "/rent/resources/credit" },
+          { label: "Renters insurance", href: "/rent/resources/insurance" },
+          { label: "Affordability calculator", href: "/rent/resources/affordability" },
+          { label: "Rent Guide", href: "/rent/resources/guide" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Sell",
+    items: [
+      [
+        { label: "Sell your home", href: "/sell/sell-your-home" },
+        { label: "Home value", href: "/sell/home-value" },
+        { label: "Local experts", href: "/sell/local-experts" },
+      ],
+      {
+        title: "Resources",
+        children: [
+          { label: "Home Selling Guide", href: "/sell/resources/guide" },
+          { label: "Pricing Strategies", href: "/sell/resources/pricing" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Get Mortgage",
+    items: [
+      [
+        { label: "Mortgage rates", href: "/mortgage/rates" },
+        { label: "Refinance rates", href: "/mortgage/refinance" },
+      ],
+      {
+        title: "Resources",
+        children: [
+          { label: "Mortgage Calculator", href: "/mortgage/resources/calculator" },
+          { label: "Mortgage Guide", href: "/mortgage/resources/guide" },
+        ],
+      },
+    ],
+  },
+];
 
 const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
-  const handleDropdownToggle = (menu: string) => {
-    if (dropdownTimer) {
-      clearTimeout(dropdownTimer);
+  // Ref to hold timer ID for delayed close
+  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleMouseEnter = (label: string) => {
+    if (closeTimeout.current) {
+      clearTimeout(closeTimeout.current);
+      closeTimeout.current = null;
     }
-    setOpenDropdown(prev => (prev === menu ? null : menu));
+    setOpenDropdown(label);
   };
 
-  const handleDropdownMouseEnter = (menu: string) => {
-    if (dropdownTimer) {
-      clearTimeout(dropdownTimer);
-    }
-    setOpenDropdown(menu);
-  };
-
-  const handleDropdownMouseLeave = () => {
-    const timer = setTimeout(() => {
+  const handleMouseLeave = () => {
+    closeTimeout.current = setTimeout(() => {
       setOpenDropdown(null);
-    }, 300);
-    setDropdownTimer(timer);
+    }, 500); // 0.5 seconds delay before hiding submenu
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prev => !prev);
-  };
-
-  const services = [
-    { label: "UI/UX Design", href: "/services/ui-ux", icon: <DesignServicesIcon fontSize="small" />, desc: "Crafting intuitive digital experiences" },
-    { label: "Machine Learning & AI", href: "/services/ml-ai", icon: <PsychologyIcon fontSize="small" />, desc: "Smart solutions for complex problems" },
-    { label: "Full Stack Development", href: "/services/full-stack", icon: <TerminalIcon fontSize="small" />, desc: "End-to-end web solutions" },
-    { label: "SEO & Digital Marketing", href: "/services/seo-marketing", icon: <CampaignIcon fontSize="small" />, desc: "Boost your online presence" },
-    { label: "Data Analytics", href: "/services/data-analytics", icon: <AnalyticsIcon fontSize="small" />, desc: "Transform data into insights" },
-    { label: "Frontend Development", href: "/services/frontend", icon: <DataObjectIcon fontSize="small" />, desc: "Beautiful, responsive interfaces" },
-    { label: "Backend Development", href: "/services/backend", icon: <SettingsSuggestIcon fontSize="small" />, desc: "Robust server-side architecture" },
-    { label: "Database Design", href: "/services/database", icon: <StorageIcon fontSize="small" />, desc: "Optimized data storage solutions" },
-  ];
-
-  // const resources = [
-  //   { label: "Tech Blog", href: "/resources/blog", icon: <ArticleIcon fontSize="small" />, desc: "Latest industry insights" },
-  //   { label: "Case Studies", href: "/resources/case-studies", icon: <DiamondIcon fontSize="small" />, desc: "Our success stories" },
-  //   { label: "Media Gallery", href: "/resources/media", icon: <MovieIcon fontSize="small" />, desc: "Our work in action" },
-  //   { label: "White Papers", href: "/resources/white-papers", icon: <ArticleIcon fontSize="small" />, desc: "In-depth technical analysis" },
-  // ];
-
-  // const products = [
-  //   { label: "SensormaticBD", href: "https://www.sensormaticbd.com/", icon: <DiamondIcon fontSize="small" />, desc: "Premium security solutions" },
-  //   { label: "NeuroTech", href: "#", icon: <PsychologyIcon fontSize="small" />, desc: "AI-powered analytics" },
-  //   { label: "CloudForge", href: "#", icon: <StorageIcon fontSize="small" />, desc: "Scalable cloud infrastructure" },
-  //   { label: "PixelCraft", href: "#", icon: <DesignServicesIcon fontSize="small" />, desc: "Design excellence" },
-  // ];
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimeout.current) {
+        clearTimeout(closeTimeout.current);
+      }
+    };
+  }, []);
 
   return (
-    <nav className="w-full sticky top-0 z-50 px-4 py-3 font-main text-navText border-b border-b-amber-400 border-secondary bg-primary/30 backdrop-blur-md shadow-lg">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Left Section */}
-        <div className="flex items-center space-x-8">
-          <Link href="/" className="text-2xl font-bold text-white flex items-center">
-          <div className="flex items-center justify-center">
-              <Image
-                src="/logo.png"
-                alt="ByteMorphIT Logo"
-                width={45} // Adjust width as per need
-                height={45} // Adjust height as per need
-                className="object-contain rounded-full"
-              />
-            </div>
-            <span className="text-lg ml-2 text-black hidden md:block font-gothic">Nestify<span className='text-amber-500 font-bold'>BD</span></span>
+    <nav className="w-full sticky top-0 bg-white shadow z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 lg:py-4 h-[64px]">
+        {/* Logo */}
+        <div className="flex-shrink-0 flex items-center h-full">
+          <Link href="/" className="block h-full flex items-center">
+            <Image
+              src="/logo.png"
+              alt="NestifyBD Logo"
+              width={150}
+              height={150}
+              className="object-contain max-h-full"
+              priority
+            />
           </Link>
+        </div>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center space-x-8 font-medium ml-10">
-            <Link className='hover:text-amber-600 hover:border-b-2 hover:border-b-amber-500 transition-colors' href="/">Home</Link>
-            <Link className='hover:text-amber-600 hover:border-b-2 hover:border-b-amber-500 transition-colors' href="/properties">Properties</Link>
-            <Link className='hover:text-amber-600 hover:border-b-2 hover:border-b-amber-500 transition-colors' href="/categories">Categories</Link>
-
-            <Link className='hover:text-amber-600 hover:border-b-2 hover:border-b-amber-500 transition-colors' href="/about">About Us</Link>
-
-            {/* Services Dropdown
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex flex-1 ml-10 text-black font-medium space-x-8">
+          {menuData.map((menu) => (
             <div
-              className="relative group"
-              onMouseEnter={() => handleDropdownMouseEnter("services")}
-              onMouseLeave={handleDropdownMouseLeave}
+              key={menu.label}
+              className="relative"
+              onMouseEnter={() => handleMouseEnter(menu.label)}
+              onMouseLeave={handleMouseLeave}
             >
-              <button className="flex items-center text-navText hover:text-button transition-colors">
-                Services 
-                <KeyboardArrowDownIcon
-                  fontSize="small"
-                  style={{
-                    transition: 'transform 0.3s ease',
-                    transform: openDropdown === "services" ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                />
+              <button className="flex items-center space-x-1 hover:text-blue-600 transition-colors duration-300">
+                <span>{menu.label}</span>
+                <KeyboardArrowDown fontSize="small" />
               </button>
-              {openDropdown === "services" && (
-                <div className="absolute left-0 bg-primary shadow-lg mt-2 py-6 w-[800px] rounded-xl z-50 grid grid-cols-2 gap-4 px-6 animate-fadeIn border border-button/20">
-                  <div className="col-span-2 mb-2 px-4 py-2 border-b border-button/20">
-                    <h3 className="text-button text-lg font-bold">Our Technology Solutions</h3>
-                    <p className="text-sm text-navText">Cutting-edge solutions tailored to your digital transformation</p>
-                  </div>
-                  {services.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      className="group flex items-center px-4 py-3 transition-all duration-200 hover:bg-slate-800 rounded-lg border border-transparent hover:border-button/30"
-                    >
-                      <span className="mr-3 text-button group-hover:text-white">{item.icon}</span>
-                      <div>
-                        <div className="font-medium text-white group-hover:text-button">{item.label}</div>
-                        <div className="text-xs text-navText group-hover:text-button/80">{item.desc}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div> */}
 
-            {/* Resources Dropdown */}
-            {/* <div
-              className="relative group"
-              onMouseEnter={() => handleDropdownMouseEnter("resources")}
-              onMouseLeave={handleDropdownMouseLeave}
-            >
-              <button className="flex items-center text-navText hover:text-button transition-colors">
-                Resources
-                <KeyboardArrowDownIcon
-                  fontSize="small"
-                  style={{
-                    transition: 'transform 0.3s ease',
-                    transform: openDropdown === "resources" ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                />
-              </button>
-              {openDropdown === "resources" && (
-                <div className="absolute left-0 bg-primary shadow-lg mt-2 py-6 w-[600px] rounded-xl z-50 grid grid-cols-2 gap-4 px-6 animate-fadeIn border border-button/20">
-                  <div className="col-span-2 mb-2 px-4 py-2 border-b border-button/20">
-                    <h3 className="text-button text-lg font-bold">Knowledge Resources</h3>
-                    <p className="text-sm text-navText">Learn from our expertise and success stories</p>
+              {/* Dropdown */}
+              <div
+                className={`absolute top-full left-0 bg-white border border-gray-200 rounded-xl shadow-xl mt-2 p-6 grid grid-cols-3 gap-6 min-w-[600px] z-[9999] 
+                  transition-opacity duration-300 ease-in-out
+                  ${openDropdown === menu.label ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}
+                `}
+                onMouseEnter={() => handleMouseEnter(menu.label)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {menu.items.map((group, idx) => (
+                  <div
+                    key={idx}
+                    className={`px-4 ${
+                      idx !== menu.items.length - 1 ? "border-r border-gray-300" : ""
+                    }`}
+                  >
+                    {Array.isArray(group) ? (
+                      group.map((item) => (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          className="block py-2 border-b border-gray-100 last:border-b-0 rounded-md px-2 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium"
+                        >
+                          {item.label}
+                        </Link>
+                      ))
+                    ) : (
+                      <>
+                        <div className="text-blue-700 font-semibold mb-5 text-lg border-b border-blue-200 pb-2 cursor-default select-none">
+                          {group.title}
+                        </div>
+                        {group.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            href={child.href}
+                            className="block py-2 border-b border-gray-100 last:border-b-0 pl-4 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </>
+                    )}
                   </div>
-                  {resources.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      className="group flex items-center px-4 py-3 transition-all duration-200 hover:bg-slate-800 rounded-lg border border-transparent hover:border-button/30"
-                    >
-                      <span className="mr-3 text-button group-hover:text-white">{item.icon}</span>
-                      <div>
-                        <div className="font-medium text-white group-hover:text-button">{item.label}</div>
-                        <div className="text-xs text-navText group-hover:text-button/80">{item.desc}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div> */}
-
-            {/* Products Dropdown */}
-            {/* <div
-              className="relative group"
-              onMouseEnter={() => handleDropdownMouseEnter("products")}
-              onMouseLeave={handleDropdownMouseLeave}
-            >
-              <button className="flex items-center text-navText hover:text-button transition-colors">
-                Products
-                <KeyboardArrowDownIcon
-                  fontSize="small"
-                  style={{
-                    transition: 'transform 0.3s ease',
-                    transform: openDropdown === "products" ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                />
-              </button>
-              {openDropdown === "products" && (
-                <div className="absolute left-0 bg-primary shadow-lg mt-2 py-6 w-[600px] rounded-xl z-50 grid grid-cols-2 gap-4 px-6 animate-fadeIn border border-button/20">
-                  <div className="col-span-2 mb-2 px-4 py-2 border-b border-button/20">
-                    <h3 className="text-button text-lg font-bold">Our Specialized Products</h3>
-                    <p className="text-sm text-navText">Dedicated solutions for every technological need</p>
-                  </div>
-                  {products.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group hover:bg-slate-800 flex items-center px-4 py-3 transition-all duration-200  rounded-lg border border-transparent hover:border-button/30"
-                    >
-                      <span className="mr-3 text-button group-hover:text-white">{item.icon}</span>
-                      <div>
-                        <div className="font-medium text-white group-hover:text-button">{item.label}</div>
-                        <div className="text-xs text-navText group-hover:text-button/80">{item.desc}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div> */}
-          </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Right Section */}
-        <div className="flex items-center space-x-4">
-          <Link href="/signin" className="hidden lg:block font-semibold p-2 pr-4 pl-4 bg-button text-black rounded-lg hover:bg-white hover:text-primary transition-all duration-300 group">
-            <span className="group-hover:tracking-wider transition-all">Sign In</span>
+        {/* Right side buttons */}
+        <div className="hidden lg:flex space-x-4">
+          <Link
+            href="/login"
+            className="px-4 py-2 text-sm font-semibold text-[#2a6071] border border-[#2a6071] rounded hover:bg-blue-50 transition"
+          >
+            Login
           </Link>
-          <button className="lg:hidden text-black hover:text-button transition-colors" onClick={toggleMobileMenu}>
-            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
+          <Link
+            href="/signup"
+            className="px-4 py-2 text-sm font-semibold text-white bg-[#2a6071] rounded hover:bg-blue-700 transition"
+          >
+            Signup
+          </Link>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="lg:hidden text-black ml-auto"
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          aria-label="Toggle mobile menu"
+        >
+          {isMobileMenuOpen ? <Close fontSize="large" /> : <Menu fontSize="large" />}
+        </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden mt-4 space-y-3 animate-slideDown bg-primary/95 backdrop-blur-sm p-4 rounded-lg border border-button/20">
-          <Link href="/" className="block text-zinc-900 hover:border-b-2 hover:border-b-amber-500 hover:text-amber-500 py-2 px-3 hover:bg-secondary rounded-lg transition-colors">Home</Link>
-          <Link href="/about" className="block text-zinc-900 hover:border-b-2 hover:border-b-amber-500 hover:text-amber-500 py-2 px-3 hover:bg-secondary rounded-lg transition-colors">About Us</Link>
-          <Link href="/properties" className="block text-zinc-900 hover:border-b-2 hover:border-b-amber-500 hover:text-amber-500 py-2 px-3 hover:bg-secondary rounded-lg transition-colors">Properties</Link>
-        <Link href="/categories" className="block text-zinc-900 hover:border-b-2 hover:border-b-amber-500 hover:text-amber-500 py-2 px-3 hover:bg-secondary rounded-lg transition-colors">Categories</Link>
-        <Link href="/signin" className="block text-zinc-900 hover:border-2 hover:bg-white hover:border-amber-400 bg-amber-500 py-2 px-3 hover:bg-secondary rounded-lg transition-colors">Sign In</Link>
+        <div className="lg:hidden bg-white border-t border-gray-200 shadow-md">
+          {menuData.map((menu) => (
+            <div key={menu.label} className="border-b border-gray-200">
+              <button
+                className="w-full px-6 py-4 flex justify-between items-center text-left font-semibold text-black"
+                onClick={() =>
+                  setMobileDropdown((prev) => (prev === menu.label ? null : menu.label))
+                }
+                aria-expanded={mobileDropdown === menu.label}
+                aria-controls={`${menu.label}-submenu`}
+              >
+                <span>{menu.label}</span>
+                <KeyboardArrowDown
+                  fontSize="small"
+                  className={`transform transition-transform duration-300 ${
+                    mobileDropdown === menu.label ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
 
-
-          {/* Mobile Services Dropdown
-          <div className="border-t border-button/20 pt-2">
-            <button 
-              onClick={() => handleDropdownToggle("services")} 
-              className="flex items-center w-full text-white hover:text-button py-2 px-3 hover:bg-secondary rounded-lg transition-colors"
-            >
-              Solutions 
-              <KeyboardArrowDownIcon 
-                fontSize="small" 
-                style={{
-                  transition: 'transform 0.3s ease',
-                  transform: openDropdown === "services" ? 'rotate(180deg)' : 'rotate(0deg)',
-                }}
-              />
-            </button>
-            {openDropdown === "services" && (
-              <div className="pl-4 grid grid-cols-1 gap-2 animate-fadeIn mt-2">
-                {services.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="group flex items-center py-2 px-3 text-white hover:bg-slate-800 rounded-lg transition-colors duration-200 border border-transparent hover:border-button/30"
-                  >
-                    <span className="mr-2 text-button">{item.icon}</span>
-                    <div>
-                      <div>{item.label}</div>
-                      <div className="text-xs text-navText">{item.desc}</div>
+              {mobileDropdown === menu.label && (
+                <div
+                  id={`${menu.label}-submenu`}
+                  className="bg-gray-50 px-6 pb-4 space-y-4"
+                >
+                  {menu.items.map((group, idx) => (
+                    <div key={idx}>
+                      {Array.isArray(group) ? (
+                        group.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="block py-2 text-gray-700 hover:text-blue-600"
+                          >
+                            {item.label}
+                          </Link>
+                        ))
+                      ) : (
+                        <>
+                          <div className="font-semibold mb-2">{group.title}</div>
+                          {group.children.map((child) => (
+                            <Link
+                              key={child.label}
+                              href={child.href}
+                              className="block py-2 pl-4 text-gray-600 hover:text-blue-600"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </>
+                      )}
                     </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div> */}
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
 
-          {/* Mobile Resources Dropdown */}
-          {/* <div className="border-t border-button/20 pt-2">
-            <button 
-              onClick={() => handleDropdownToggle("resources")} 
-              className="flex items-center w-full text-white hover:text-button py-2 px-3 hover:bg-secondary rounded-lg transition-colors"
+          {/* Mobile Login/Signup buttons */}
+          <div className="flex justify-center space-x-4 p-6 border-t border-gray-200">
+            <Link
+              href="/login"
+              className="px-6 py-2 text-sm font-semibold text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition"
             >
-              Resources
-              <KeyboardArrowDownIcon 
-                fontSize="small" 
-                style={{
-                  transition: 'transform 0.3s ease',
-                  transform: openDropdown === "resources" ? 'rotate(180deg)' : 'rotate(0deg)',
-                }}
-              />
-            </button>
-            {openDropdown === "resources" && (
-              <div className="pl-4 grid grid-cols-1 gap-2 animate-fadeIn mt-2">
-                {resources.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="group flex items-center py-2 px-3 text-white hover:bg-slate-800 rounded-lg transition-colors duration-200 border border-transparent hover:border-button/30"
-                  >
-                    <span className="mr-2 text-button">{item.icon}</span>
-                    <div>
-                      <div>{item.label}</div>
-                      <div className="text-xs text-navText">{item.desc}</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div> */}
-
-          {/* Mobile Products Dropdown */}
-          {/* <div className="border-t border-button/20 pt-2">
-            <button 
-              onClick={() => handleDropdownToggle("products")} 
-              className="flex items-center w-full text-white hover:text-button py-2 px-3 hover:bg-secondary rounded-lg transition-colors"
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition"
             >
-              Products
-              <KeyboardArrowDownIcon 
-                fontSize="small" 
-                style={{
-                  transition: 'transform 0.3s ease',
-                  transform: openDropdown === "products" ? 'rotate(180deg)' : 'rotate(0deg)',
-                }}
-              />
-            </button>
-            {openDropdown === "products" && (
-              <div className="pl-4 grid grid-cols-1 gap-2 animate-fadeIn mt-2">
-                {products.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center hover:bg-slate-800 py-2 px-3 text-white rounded-lg transition-colors duration-200 border border-transparent hover:border-button/30"
-                  >
-                    <span className="mr-2 text-button">{item.icon}</span>
-                    <div>
-                      <div>{item.label}</div>
-                      <div className="text-xs text-navText">{item.desc}</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div> */}
+              Signup
+            </Link>
+          </div>
         </div>
       )}
     </nav>

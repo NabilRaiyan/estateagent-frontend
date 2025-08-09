@@ -18,21 +18,26 @@ export default function PropertyTypeSection() {
       <h2 className="text-lg text-zinc-500 font-medium text-center mb-10">
         Browse properties by category to find exactly what you&apos;re looking for
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {propertyTypes.map(({ title, icon: Icon, description, count }) => (
-          <div
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {propertyTypes.map(({ title, icon: Icon, description, count }) => (
+            <div
             key={title}
-            className="flex flex-col items-left mb-2 justify-left bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300"
-          >
-            <Icon size={48} className="text-amber-600 bg-[#fdf2eb] m-3 p-2 rounded h-16 w-16 mb-4" />
+            className="group flex flex-col items-left mb-2 justify-left bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300"
+            >
+            <Icon
+                size={48}
+                className="
+                    text-amber-600 bg-[#fdf2eb] shadow-xl m-3 p-2 rounded-lg h-16 w-16 mb-4
+                    transform transition-transform duration-500 ease-in-out
+                    group-hover:scale-110 group-hover:rotate-20
+                "
+            />
             <h3 className="text-lg text-zinc-800 mb-1 ml-3 font-semibold">{title}</h3>
             <p className="text-md text-zinc-500 mb-1 ml-3 font-medium">{description}</p>
             <p className="text-sm text-amber-500 mb-1 ml-3 font-semibold">{count}</p>
-
-
-          </div>
-        ))}
-      </div>
+        </div>
+  ))}
+</div>
     </section>
   );
 }

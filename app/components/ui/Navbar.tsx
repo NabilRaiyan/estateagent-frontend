@@ -83,6 +83,22 @@ const menuData = [
     ],
   },
   {
+    label: "Lease",
+    items: [
+      [
+        { label: "Lease your home", href: "/lease/lease-your-home" },
+        { label: "Lease your property", href: "/lease/lease-your-property" },
+      ],
+      {
+        title: "Resources",
+        children: [
+          { label: "Home Selling Guide", href: "/lease/resources/guide" },
+          { label: "Pricing Strategies", href: "/lease/resources/pricing" },
+        ],
+      },
+    ],
+  },
+  {
     label: "Get Mortgage",
     items: [
       [

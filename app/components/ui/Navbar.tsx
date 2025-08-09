@@ -2,10 +2,13 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import Menu from '@mui/icons-material/Menu';
-import Close from '@mui/icons-material/Close';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import Menu from "@mui/icons-material/Menu";
+import Close from "@mui/icons-material/Close";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import Image from "next/image";
+
+import { Menu as MuiMenu, MenuItem, Button } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 
 const menuData = [
   // ... your existing menuData unchanged ...
@@ -121,7 +124,13 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
-  // Ref to hold timer ID for delayed close
+  // Language state: "en" or "bn"
+  const [language, setLanguage] = useState<"en" | "bn">("en");
+
+  // Language dropdown anchor element
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMouseEnter = (label: string) => {
@@ -135,10 +144,9 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     closeTimeout.current = setTimeout(() => {
       setOpenDropdown(null);
-    }, 500); // 0.5 seconds delay before hiding submenu
+    }, 500);
   };
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (closeTimeout.current) {
@@ -146,6 +154,21 @@ const Navbar = () => {
       }
     };
   }, []);
+
+  // Language dropdown handlers
+  const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleLangMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLanguageSelect = (lang: "en" | "bn") => {
+    setLanguage(lang);
+    setAnchorEl(null);
+    // TODO: Trigger full app language change here
+  };
 
   return (
     <nav className="w-full sticky top-0 bg-white shadow z-50">
@@ -227,8 +250,50 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Right side buttons */}
-        <div className="hidden lg:flex space-x-4">
+        {/* Right side buttons + Language selector */}
+        <div className="hidden lg:flex items-center space-x-4">
+          {/* Language dropdown */}
+          <div>
+            <Button
+              aria-controls={open ? "language-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleLangMenuOpen}
+              startIcon={<LanguageIcon />}
+              className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition capitalize"
+            >
+              {language === "en" ? "English" : "বাংলা"}
+            </Button>
+            <MuiMenu
+              id="language-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleLangMenuClose}
+              MenuListProps={{
+                "aria-labelledby": "language-button",
+              }}
+              PaperProps={{
+                style: {
+                  minWidth: 120,
+                },
+              }}
+            >
+              <MenuItem
+                selected={language === "en"}
+                onClick={() => handleLanguageSelect("en")}
+              >
+                🇬🇧 English
+              </MenuItem>
+              <MenuItem
+                selected={language === "bn"}
+                onClick={() => handleLanguageSelect("bn")}
+              >
+                🇧🇩 বাংলা
+              </MenuItem>
+            </MuiMenu>
+          </div>
+
+          {/* Login / Signup */}
           <Link
             href="/login"
             className="px-4 py-2 text-sm font-semibold text-[#2a6071] border border-[#2a6071] rounded hover:bg-blue-50 transition"
@@ -256,6 +321,20 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200 shadow-md">
+          {/* Mobile language toggle */}
+          <div className="flex justify-center px-6 py-4 border-b border-gray-200">
+            <button
+              onClick={() =>
+                setLanguage((prev) => (prev === "en" ? "bn" : "en"))
+              }
+              aria-label="Toggle language"
+              className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition"
+            >
+              {language === "en" ? "English" : "বাংলা"}
+            </button>
+          </div>
+
+          {/* Menu items */}
           {menuData.map((menu) => (
             <div key={menu.label} className="border-b border-gray-200">
               <button
@@ -276,10 +355,7 @@ const Navbar = () => {
               </button>
 
               {mobileDropdown === menu.label && (
-                <div
-                  id={`${menu.label}-submenu`}
-                  className="bg-gray-50 px-6 pb-4 space-y-4"
-                >
+                <div id={`${menu.label}-submenu`} className="bg-gray-50 px-6 pb-4 space-y-4">
                   {menu.items.map((group, idx) => (
                     <div key={idx}>
                       {Array.isArray(group) ? (

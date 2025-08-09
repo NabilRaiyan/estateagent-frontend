@@ -12,7 +12,7 @@ export default function I18nextProviderWrapper({ children }: Props) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("language") || "en";
+    const savedLang = localStorage.getItem("language") || "bn";
     i18n.changeLanguage(savedLang).then(() => setReady(true));
   }, []);
 

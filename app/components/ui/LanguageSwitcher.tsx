@@ -7,7 +7,7 @@ const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
 
   const toggleLanguage = () => {
-    const newLng = i18n.language === "en" ? "bn" : "en";
+    const newLng = i18n.language === "bn" ? "en" : "bn";
     i18n.changeLanguage(newLng);
   };
 
@@ -17,7 +17,7 @@ const LanguageSwitcher = () => {
       className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition"
       aria-label="Toggle language"
     >
-      {i18n.language === "en" ? "English" : "বাংলা"}
+      {i18n.language === "bn" ? "বাংলা" : "English"}
     </button>
   );
 };

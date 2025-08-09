@@ -54,7 +54,7 @@ const propertyTypes = [
 
 export default function PropertyTypeSection() {
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   return (

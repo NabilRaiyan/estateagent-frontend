@@ -49,10 +49,11 @@ export default function PropertyCard({
         max-w-sm rounded-xl shadow-lg overflow-hidden bg-white
         transform transition-all duration-300
         hover:shadow-2xl
+        flex flex-col h-full
       "
     >
       {/* Image container */}
-      <div className="relative">
+      <div className="relative flex-shrink-0">
         <Image
           src={imageSrc}
           alt={title}
@@ -97,7 +98,7 @@ export default function PropertyCard({
       </div>
 
       {/* Content below image */}
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-2 flex flex-col flex-grow">
         <h3 className="text-lg font-semibold text-zinc-800 truncate">{title}</h3>
 
         <div className="flex items-center text-sm text-zinc-500 space-x-1">
@@ -125,7 +126,7 @@ export default function PropertyCard({
 
         <hr className="border-zinc-200" />
 
-        <div className="text-zinc-700 font-semibold text-sm">
+        <div className="text-zinc-700 font-semibold text-sm mt-auto">
           <p className="text-[#2a6071] font-semibold text-xl mb-1">
             Agent Name
           </p>
@@ -144,7 +145,7 @@ export default function PropertyCard({
                   bg-gradient-to-r from-[#2a6071] to-cyan-500 
                   text-white font-semibold py-2 rounded-lg 
                   shadow-lg
-                  transform transition-all duration-300
+                  transform transition-all duration-200
                   hover:-translate-y-1 hover:scale-105 hover:shadow-xl
                 "
               >

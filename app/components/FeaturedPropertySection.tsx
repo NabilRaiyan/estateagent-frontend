@@ -5,6 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import PropertyCard from "./ui/PropertyCard";
+import { Button } from "./ui/Button";
 
 interface Property {
   id: string;
@@ -79,6 +80,34 @@ const sampleProperties: Property[] = [
     priceTk: 90000,
     isWishlisted: false,
   },
+  {
+    id: "5",
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Rent",
+    rating: 4.5,
+    title: "Modern Family Home",
+    location: "Dhanmondi, Dhaka",
+    bhk: 3,
+    washroom: 2,
+    sqft: 1850,
+    agentName: "John Doe",
+    priceTk: 75000,
+    isWishlisted: false,
+  },
+  {
+    id: "6",
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Rent",
+    rating: 4.5,
+    title: "Modern Family Home",
+    location: "Dhanmondi, Dhaka",
+    bhk: 3,
+    washroom: 2,
+    sqft: 1850,
+    agentName: "John Doe",
+    priceTk: 75000,
+    isWishlisted: false,
+  },
 ];
 
 export default function FeaturedPropertySection() {
@@ -121,6 +150,7 @@ export default function FeaturedPropertySection() {
         Discover our handpicked selection of premium properties across <br />
         Bangladesh&apos;s prime locations
       </p>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         {properties.map((property, index) => (
           <div
@@ -136,6 +166,22 @@ export default function FeaturedPropertySection() {
             />
           </div>
         ))}
+      </div>
+
+      {/* Button container */}
+      <div
+        className="mt-12 flex justify-center"
+        data-aos="fade-up"
+        data-aos-delay={properties.length * 100 + 100}
+      >
+        <Button
+          href="/properties"
+          size="lg"
+          variant="default"
+          className="text-lg px-8 bg-gradient-to-r cursor-pointer from-[#2a6071] to-cyan-500 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-cyan-400"
+        >
+          More Properties
+        </Button>
       </div>
     </section>
   );

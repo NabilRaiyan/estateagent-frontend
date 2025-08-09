@@ -46,7 +46,7 @@ export const ServicesSection = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-6 py-16">
-      <h2 className="text-3xl text-gray-950 font-bold text-center mb-4">Our Services</h2>
+      <h2 className="text-3xl text-gray-950 font-bold text-center mb-4">Find. Buy. Sell. Rent. All in One Place.</h2>
       <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
         We offer a wide range of property services tailored to your needs. Whether you want to buy, sell, rent, lease, or finance a property, we are here to help.
       </p>

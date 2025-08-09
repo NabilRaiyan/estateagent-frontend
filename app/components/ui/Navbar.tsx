@@ -133,12 +133,12 @@ const Navbar = () => {
 
   return (
     <nav className="w-full sticky top-0 bg-white shadow z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 lg:py-4 h-[64px]">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 lg:py-4 h-[74px]">
         {/* Logo */}
         <div className="flex-shrink-0 flex items-center h-full">
           <Link href="/" className="block h-full flex items-center">
             <Image
-              src="/logo.png"
+              src="/logo1.jpeg"
               alt="NestifyBD Logo"
               width={150}
               height={150}

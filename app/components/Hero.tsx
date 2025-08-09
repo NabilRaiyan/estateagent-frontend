@@ -3,33 +3,35 @@
 import Image from "next/image";
 import { Button } from "../components/ui/Button";
 import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const slides = [
   {
-    image: "/hero-img-1.jpg",
+    image: "/hero-img-2.jpg",
     title: "Historic Modern Architecture",
-    subtitle: "Beautiful traditional Bangladeshi architecture"
+    subtitle: "Beautiful traditional Bangladeshi architecture",
+  },
+  {
+    image: "/hero-img-1.jpg",
+    title: "Traditional Bangladesh Heritage",
+    subtitle: "Discover the beauty of our cultural landmarks",
   },
   {
     image: "/hero-img-4.jpg",
-    title: "Traditional Bangladesh Heritage",
-    subtitle: "Discover the beauty of our cultural landmarks"
-  },
-  {
-    image: "/hero-img-2.jpg",
     title: "Rural Bangladesh Beauty",
-    subtitle: "Experience the natural countryside charm"
+    subtitle: "Experience the natural countryside charm",
   },
   {
     image: "/hero-img-3.jpg",
     title: "Modern Apartments in Dhaka",
-    subtitle: "Premium living spaces in the heart of the city"
+    subtitle: "Premium living spaces in the heart of the city",
   },
   {
     image: "/hero-img-5.jpg",
     title: "Investment Opportunities",
-    subtitle: "Secure your future with prime properties"
-  }
+    subtitle: "Secure your future with prime properties",
+  },
 ];
 
 // Custom hook for count up animation
@@ -38,7 +40,7 @@ function useCountUp(target: number, duration = 2000) {
 
   useEffect(() => {
     let start = 0;
-    const increment = target / (duration / 40); // update every ~30ms
+    const increment = target / (duration / 40); // update every ~40ms
     const timer = setInterval(() => {
       start += increment;
       if (start >= target) {
@@ -63,11 +65,21 @@ export const Hero = () => {
   const clientsCount = useCountUp(2000);
   const agentsCount = useCountUp(500);
 
+  // Auto-slide logic
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // animation duration in ms
+      once: true,     // only animate once
+      easing: "ease-out-cubic",
+    });
   }, []);
 
   return (
@@ -84,26 +96,40 @@ export const Hero = () => {
             src={slide.image}
             alt={slide.title}
             className="w-full h-full object-cover"
-            width={1920}   // example width (adjust as needed)
-            height={1080}          />
+            width={1920}
+            height={1080}
+          />
         </div>
       ))}
 
-      {/* Full glassmorphic overlay */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/20 backdrop-blur-[0.5px] z-10" />
 
       {/* Content */}
       <div className="absolute inset-0 flex items-center justify-center text-white z-20">
         <div className="max-w-4xl px-4 py-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-md">
+          <h1
+            className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-md"
+            data-aos="fade-up"
+          >
             Find Your Dream Property
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/90">
+          <p
+            className="text-xl md:text-2xl mb-8 text-white/90"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Discover the best real estate opportunities in Bangladesh
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          {/* Buttons */}
+          <div
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
             <Button
+              href="/properties"
               variant="gradient"
               size="lg"
               className="text-lg px-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
@@ -112,6 +138,7 @@ export const Hero = () => {
             </Button>
 
             <Button
+              href="/help"
               size="lg"
               variant="outline"
               className="text-lg px-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
@@ -120,31 +147,40 @@ export const Hero = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center bg-zinc-900 p-3 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-[#77d9f7] mb-2">
+          {/* Stats */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div className="text-center bg-gradient-to-r from-white via-amber-50 to-slate-50 shadow-xl p-3 rounded-2xl transform hover:-translate-y-2 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {propertiesCount}+
               </div>
-              <div className="text-white/90">Properties Listed</div>
+              <div className="text-[#2a6071]/90">Properties Listed</div>
             </div>
-            <div className="text-center bg-zinc-900 p-3 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-[#77d9f7] mb-2">
+            <div className="text-center bg-gradient-to-r from-white via-amber-50 to-slate-50 shadow-xl p-3 rounded-2xl transform hover:-translate-y-2 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {clientsCount}+
               </div>
-              <div className="text-white/90">Happy Clients</div>
+              <div className="text-[#2a6071]/90">Happy Clients</div>
             </div>
-            <div className="text-center bg-zinc-900 p-3 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-[#77d9f7] mb-2">
+            <div className="text-center bg-gradient-to-r from-white via-amber-50 to-slate-50 shadow-xl p-3 rounded-2xl transform hover:-translate-y-2 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {agentsCount}+
               </div>
-              <div className="text-white/90">Expert Agents</div>
+              <div className="text-[#2a6071]/90">Expert Agents</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20">
+      <div
+        className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20"
+        data-aos="fade-up"
+        data-aos-delay="800"
+      >
         <div className="flex gap-2">
           {slides.map((_, index) => (
             <button
@@ -159,7 +195,11 @@ export const Hero = () => {
       </div>
 
       {/* Slide description */}
-      <div className="absolute bottom-8 left-8 text-white z-20 bg-black/20 px-4 py-2 rounded-lg shadow-md">
+      <div
+        className="absolute bottom-8 left-8 text-white z-20 bg-black/20 px-4 py-2 rounded-lg shadow-md"
+        data-aos="fade-right"
+        data-aos-delay="300"
+      >
         <h3 className="text-xl font-semibold mb-1">
           {slides[currentSlide].title}
         </h3>

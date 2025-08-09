@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import PropertyCard from "./ui/PropertyCard";
 
 interface Property {
@@ -80,12 +83,15 @@ const sampleProperties: Property[] = [
 
 export default function FeaturedPropertySection() {
   const [properties, setProperties] = useState(
-    // Add detailsUrl dynamically based on id
     sampleProperties.map((p) => ({
       ...p,
       detailsUrl: `/property/${p.id}`,
     }))
   );
+
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
 
   const toggleWishlist = (id: string) => {
     setProperties((prev) =>
@@ -101,20 +107,34 @@ export default function FeaturedPropertySection() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">
-      <h2 className="text-4xl font-bold text-zinc-800 mb-8 text-center">
+      <h2
+        className="text-4xl font-bold text-zinc-800 mb-8 text-center"
+        data-aos="fade-up"
+      >
         Featured Properties
       </h2>
-      <p className="text-lg font-medium text-zinc-500 mb-8 mt-2 text-center">
-        Discover our handpicked selection of premium properties across Bangladesh&apos;s prime locations
+      <p
+        className="text-lg font-medium text-zinc-500 mb-8 mt-2 text-center"
+        data-aos="fade-up"
+        data-aos-delay={100}
+      >
+        Discover our handpicked selection of premium properties across <br />
+        Bangladesh&apos;s prime locations
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {properties.map((property) => (
-          <PropertyCard
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        {properties.map((property, index) => (
+          <div
             key={property.id}
-            {...property}
-            onWishlistClick={() => toggleWishlist(property.id)}
-            onShareClick={() => shareProperty(property.id)}
-          />
+            data-aos="zoom-in"
+            data-aos-delay={index * 100}
+            className="h-full"
+          >
+            <PropertyCard
+              {...property}
+              onWishlistClick={() => toggleWishlist(property.id)}
+              onShareClick={() => shareProperty(property.id)}
+            />
+          </div>
         ))}
       </div>
     </section>

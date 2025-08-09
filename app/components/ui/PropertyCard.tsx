@@ -44,7 +44,13 @@ export default function PropertyCard({
   detailsUrl,
 }: PropertyCardProps) {
   return (
-    <div className="max-w-sm rounded-xl shadow-lg overflow-hidden bg-white">
+    <div
+      className="
+        max-w-sm rounded-xl shadow-lg overflow-hidden bg-white
+        transform transition-all duration-300
+        hover:shadow-2xl
+      "
+    >
       {/* Image container */}
       <div className="relative">
         <Image
@@ -55,7 +61,7 @@ export default function PropertyCard({
           height={200}
         />
         {/* Status tag top-left */}
-        <span className="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+        <span className="absolute top-3 left-3 bg-gradient-to-r from-[#2a6071] to-cyan-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
           {status}
         </span>
 
@@ -65,7 +71,9 @@ export default function PropertyCard({
             onClick={onWishlistClick}
             aria-label="Add to wishlist"
             className={`p-1 rounded-full bg-white shadow-md hover:bg-amber-100 transition-colors ${
-              isWishlisted ? "text-amber-600 bg-amber-100" : "text-gray-400 bg-white"
+              isWishlisted
+                ? "text-amber-600 bg-amber-100"
+                : "text-gray-400 bg-white"
             }`}
           >
             <Heart size={20} />
@@ -82,7 +90,9 @@ export default function PropertyCard({
         {/* Rating bottom-left */}
         <div className="absolute bottom-3 left-3 bg-white bg-opacity-90 rounded-md px-2 py-1 flex items-center shadow-md">
           <Star className="text-amber-500" size={16} />
-          <span className="ml-1 text-sm font-semibold text-amber-600">{rating.toFixed(1)}</span>
+          <span className="ml-1 text-sm font-semibold text-amber-600">
+            {rating.toFixed(1)}
+          </span>
         </div>
       </div>
 
@@ -116,16 +126,27 @@ export default function PropertyCard({
         <hr className="border-zinc-200" />
 
         <div className="text-zinc-700 font-semibold text-sm">
-          <p className="text-[#2a6071] font-semibold text-xl mb-1">Agent Name</p>
+          <p className="text-[#2a6071] font-semibold text-xl mb-1">
+            Agent Name
+          </p>
           <div className="flex justify-between items-center">
             <span className="text-zinc-800">{agentName}</span>
-            <span className="text-amber-600">৳ {priceTk.toLocaleString()}</span>
+            <span className="text-amber-600">
+              ৳ {priceTk.toLocaleString()}
+            </span>
           </div>
           {detailsUrl && (
             <div className="mt-4">
               <Link
                 href={detailsUrl}
-                className="inline-block w-full text-center bg-gradient-to-r shadow-2xl from-orange-300 via-amber-500 to-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-700 transition-colors"
+                className="
+                  inline-block w-full text-center 
+                  bg-gradient-to-r from-[#2a6071] to-cyan-500 
+                  text-white font-semibold py-2 rounded-lg 
+                  shadow-lg
+                  transform transition-all duration-300
+                  hover:-translate-y-1 hover:scale-105 hover:shadow-xl
+                "
               >
                 View Details
               </Link>

@@ -1,10 +1,9 @@
-// components/ui/button.tsx
+import * as React from "react";
+import Link, { LinkProps } from "next/link";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "../../lib/utils"
+import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -33,27 +32,76 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+interface ButtonProps
+  extends VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  className?: string;
+  href?: string;
+  // Explicitly separate button and anchor props:
+  buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  linkProps?: Omit<LinkProps, 'href'> & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  children: React.ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+const Button = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  ButtonProps
+>((props, ref) => {
+  const {
+    className,
+    variant,
+    size,
+    asChild = false,
+    href,
+    buttonProps,
+    linkProps,
+    children,
+    ...rest
+  } = props;
+
+  const classes = cn(buttonVariants({ variant, size }), className);
+
+  if (href) {
+    // Render Next.js Link without nested <a>, pass only anchor props
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size }), className)}
-        ref={ref}
-        {...props}
-      />
-    )
+      <Link
+        href={href}
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        className={classes}
+        {...linkProps}
+      >
+        {children}
+      </Link>
+    );
   }
-)
 
-Button.displayName = "Button"
+  if (asChild) {
+    return (
+      <Slot
+        className={classes}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        {...buttonProps}
+        {...rest}
+      >
+        {children}
+      </Slot>
+    );
+  }
 
-export { Button, buttonVariants }
+  return (
+    <button
+      className={classes}
+      ref={ref as React.Ref<HTMLButtonElement>}
+      {...buttonProps}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});
+
+Button.displayName = "Button";
+
+export { Button, buttonVariants };

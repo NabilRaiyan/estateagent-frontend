@@ -13,46 +13,50 @@ import {
   Hotel,
 } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 const propertyTypes = [
   {
-    title: "Residential",
+    titleKey: "propertyTypes.residential.title",
     icon: Home,
-    description: "Apartments, Villas, Houses",
-    count: "2,500+ Properties",
+    descriptionKey: "propertyTypes.residential.description",
+    countKey: "propertyTypes.residential.count",
   },
   {
-    title: "Commercial",
+    titleKey: "propertyTypes.commercial.title",
     icon: Building,
-    description: "Offices, Coworking Spaces",
-    count: "850+ Properties",
+    descriptionKey: "propertyTypes.commercial.description",
+    countKey: "propertyTypes.commercial.count",
   },
   {
-    title: "Industrial",
+    titleKey: "propertyTypes.industrial.title",
     icon: Factory,
-    description: "Shops, Showrooms, Malls",
-    count: "2,500+ Properties",
+    descriptionKey: "propertyTypes.industrial.description",
+    countKey: "propertyTypes.industrial.count",
   },
   {
-    title: "Land & Plots",
+    titleKey: "propertyTypes.land.title",
     icon: Landmark,
-    description: "Plots, Agricultural Land",
-    count: "900+ Properties",
+    descriptionKey: "propertyTypes.land.description",
+    countKey: "propertyTypes.land.count",
   },
   {
-    title: "Warehouses",
+    titleKey: "propertyTypes.warehouse.title",
     icon: Warehouse,
-    description: "Warehouses, Factories",
-    count: "450+ Properties",
+    descriptionKey: "propertyTypes.warehouse.description",
+    countKey: "propertyTypes.warehouse.count",
   },
   {
-    title: "Hotels & Resorts",
+    titleKey: "propertyTypes.hotel.title",
     icon: Hotel,
-    description: "Covered, Open Parking",
-    count: "350+ Properties",
+    descriptionKey: "propertyTypes.hotel.description",
+    countKey: "propertyTypes.hotel.count",
   },
 ];
 
 export default function PropertyTypeSection() {
+  const { t } = useTranslation();
+
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
   }, []);
@@ -63,20 +67,19 @@ export default function PropertyTypeSection() {
         className="text-5xl text-zinc-700 font-bold text-center mb-5"
         data-aos="fade-up"
       >
-        Property Types
+        {t("propertyTypes.mainTitle")}
       </h2>
       <h2
         className="text-lg text-zinc-500 font-medium text-center mb-10"
         data-aos="fade-up"
         data-aos-delay="100"
       >
-        Browse properties by category to find exactly what you&apos;re looking
-        for
+        {t("propertyTypes.subTitle")}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {propertyTypes.map(({ title, icon: Icon, description, count }, index) => (
+        {propertyTypes.map(({ titleKey, icon: Icon, descriptionKey, countKey }, index) => (
           <div
-            key={title}
+            key={titleKey}
             data-aos="zoom-in"
             data-aos-delay={index * 100} // staggered delay
             className="
@@ -96,13 +99,13 @@ export default function PropertyTypeSection() {
               "
             />
             <h3 className="text-lg text-zinc-800 mb-1 ml-3 font-semibold">
-              {title}
+              {t(titleKey)}
             </h3>
             <p className="text-md text-zinc-500 mb-1 ml-3 font-medium">
-              {description}
+              {t(descriptionKey)}
             </p>
             <p className="text-sm text-amber-500 mb-1 ml-3 font-semibold">
-              {count}
+              {t(countKey)}
             </p>
           </div>
         ))}

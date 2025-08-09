@@ -5,32 +5,33 @@ import { Button } from "../components/ui/Button";
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useTranslation } from "react-i18next";
 
 const slides = [
   {
     image: "/hero-img-2.jpg",
-    title: "Historic Modern Architecture",
-    subtitle: "Beautiful traditional Bangladeshi architecture",
+    titleKey: "hero.slides.historicModernArchitecture.title",
+    subtitleKey: "hero.slides.historicModernArchitecture.subtitle",
   },
   {
     image: "/hero-img-1.jpg",
-    title: "Traditional Bangladesh Heritage",
-    subtitle: "Discover the beauty of our cultural landmarks",
+    titleKey: "hero.slides.traditionalBangladeshHeritage.title",
+    subtitleKey: "hero.slides.traditionalBangladeshHeritage.subtitle",
   },
   {
     image: "/hero-img-4.jpg",
-    title: "Rural Bangladesh Beauty",
-    subtitle: "Experience the natural countryside charm",
+    titleKey: "hero.slides.ruralBangladeshBeauty.title",
+    subtitleKey: "hero.slides.ruralBangladeshBeauty.subtitle",
   },
   {
     image: "/hero-img-3.jpg",
-    title: "Modern Apartments in Dhaka",
-    subtitle: "Premium living spaces in the heart of the city",
+    titleKey: "hero.slides.modernApartmentsDhaka.title",
+    subtitleKey: "hero.slides.modernApartmentsDhaka.subtitle",
   },
   {
     image: "/hero-img-5.jpg",
-    title: "Investment Opportunities",
-    subtitle: "Secure your future with prime properties",
+    titleKey: "hero.slides.investmentOpportunities.title",
+    subtitleKey: "hero.slides.investmentOpportunities.subtitle",
   },
 ];
 
@@ -58,6 +59,8 @@ function useCountUp(target: number, duration = 2000) {
 }
 
 export const Hero = () => {
+  const { t } = useTranslation();
+
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Use count up hook for each stat
@@ -76,8 +79,8 @@ export const Hero = () => {
   // Initialize AOS
   useEffect(() => {
     AOS.init({
-      duration: 1000, // animation duration in ms
-      once: true,     // only animate once
+      duration: 1000,
+      once: true,
       easing: "ease-out-cubic",
     });
   }, []);
@@ -94,7 +97,7 @@ export const Hero = () => {
         >
           <Image
             src={slide.image}
-            alt={slide.title}
+            alt={t(slide.titleKey)}
             className="w-full h-full object-cover"
             width={1920}
             height={1080}
@@ -112,14 +115,14 @@ export const Hero = () => {
             className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-md"
             data-aos="fade-up"
           >
-            Find Your Dream Property
+            {t("hero.mainTitle")}
           </h1>
           <p
             className="text-xl md:text-2xl mb-8 text-white/90"
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            Discover the best real estate opportunities in Bangladesh
+            {t("hero.mainSubtitle")}
           </p>
 
           {/* Buttons */}
@@ -134,7 +137,7 @@ export const Hero = () => {
               size="lg"
               className="text-lg px-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
             >
-              Explore Properties
+              {t("hero.buttons.exploreProperties")}
             </Button>
 
             <Button
@@ -143,7 +146,7 @@ export const Hero = () => {
               variant="outline"
               className="text-lg px-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
             >
-              Get Expert Consultation
+              {t("hero.buttons.getConsultation")}
             </Button>
           </div>
 
@@ -157,19 +160,25 @@ export const Hero = () => {
               <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {propertiesCount}+
               </div>
-              <div className="text-[#2a6071]/90">Properties Listed</div>
+              <div className="text-[#2a6071]/90">
+                {t("hero.stats.propertiesListed")}
+              </div>
             </div>
             <div className="text-center bg-gradient-to-r from-white via-amber-50 to-slate-50 shadow-xl p-3 rounded-2xl transform hover:-translate-y-2 transition-all duration-300">
               <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {clientsCount}+
               </div>
-              <div className="text-[#2a6071]/90">Happy Clients</div>
+              <div className="text-[#2a6071]/90">
+                {t("hero.stats.happyClients")}
+              </div>
             </div>
             <div className="text-center bg-gradient-to-r from-white via-amber-50 to-slate-50 shadow-xl p-3 rounded-2xl transform hover:-translate-y-2 transition-all duration-300">
               <div className="text-3xl md:text-4xl font-bold text-[#2a6071] mb-2">
                 {agentsCount}+
               </div>
-              <div className="text-[#2a6071]/90">Expert Agents</div>
+              <div className="text-[#2a6071]/90">
+                {t("hero.stats.expertAgents")}
+              </div>
             </div>
           </div>
         </div>
@@ -201,11 +210,9 @@ export const Hero = () => {
         data-aos-delay="300"
       >
         <h3 className="text-xl font-semibold mb-1">
-          {slides[currentSlide].title}
+          {t(slides[currentSlide].titleKey)}
         </h3>
-        <p className="text-white/80">
-          {slides[currentSlide].subtitle}
-        </p>
+        <p className="text-white/80">{t(slides[currentSlide].subtitleKey)}</p>
       </div>
     </section>
   );

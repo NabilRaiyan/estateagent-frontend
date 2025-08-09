@@ -1,0 +1,124 @@
+{
+  "Buy": "কিনুন",
+  "Homes for sale": "বিক্রয়ের জন্য বাড়ি",
+  "Foreclosures": "ফোরক্লোজার",
+  "For sale by owner": "মালিকের দ্বারা বিক্রয়",
+  "Open houses": "ওপেন হাউস",
+  "New construction": "নতুন নির্মাণ",
+  "Coming soon": "শীঘ্রই আসছে",
+  "Recent home sales": "সাম্প্রতিক বাড়ি বিক্রয়",
+  "All homes": "সমস্ত বাড়ি",
+  "Resources": "রিসোর্সেস",
+  "Home Buying Guide": "বাড়ি কেনার গাইড",
+  "Foreclosure Center": "ফোরক্লোজার সেন্টার",
+  "Real Estate App": "রিয়েল এস্টেট অ্যাপ",
+  "Down Payment Assistance": "ডাউন পেমেন্ট সহায়তা",
+  "Rent": "ভাড়া",
+  "Apartments for rent": "ভাড়ার জন্য অ্যাপার্টমেন্ট",
+  "Houses for rent": "ভাড়ার জন্য বাড়ি",
+  "All rental listings": "সমস্ত ভাড়ার তালিকা",
+  "All rental buildings": "সমস্ত ভাড়ার বিল্ডিং",
+  "Your Search": "আপনার অনুসন্ধান",
+  "Saved searches": "সংরক্ষিত অনুসন্ধান",
+  "Inbox": "ইনবক্স",
+  "Contacted rentals": "যোগাযোগ করা ভাড়া",
+  "Applications": "আবেদনসমূহ",
+  "Rent with NestifyBD": "নেস্টিফাইবিডি সঙ্গে ভাড়া",
+  "Build your credit": "আপনার ক্রেডিট তৈরি করুন",
+  "Renters insurance": "ভাড়াটিয়াদের বীমা",
+  "Affordability calculator": "ক্ষমতা হিসাব যন্ত্র",
+  "Rent Guide": "ভাড়া গাইড",
+  "Sell": "বিক্রয় করুন",
+  "Sell your home": "আপনার বাড়ি বিক্রয় করুন",
+  "Home value": "বাড়ির মূল্য",
+  "Local experts": "স্থানীয় বিশেষজ্ঞরা",
+  "Home Selling Guide": "বাড়ি বিক্রয়ের গাইড",
+  "Pricing Strategies": "মূল্য নির্ধারণ কৌশল",
+  "Lease": "লিজ",
+  "Lease your home": "আপনার বাড়ি লিজ করুন",
+  "Lease your property": "আপনার সম্পত্তি লিজ করুন",
+  "Get Mortgage": "ঋণ পান",
+  "Mortgage rates": "ঋণের হার",
+  "Refinance rates": "রিফাইন্যান্স হার",
+  "Mortgage Calculator": "ঋণ ক্যালকুলেটর",
+  "Mortgage Guide": "ঋণ গাইড",
+  "Login": "লগইন",
+  "Signup": "সাইনআপ",
+  "English": "ইংরেজি",
+  "বাংলা": "বাংলা",
+  "Toggle mobile menu": "মোবাইল মেনু টগল করুন",
+  "Toggle language": "ভাষা পরিবর্তন করুন",
+  "logoAlt": "নেস্টিফাইবিডি লোগো",
+
+  "hero": {
+    "mainTitle": "আপনার স্বপ্নের সম্পত্তি খুঁজুন",
+    "mainSubtitle": "বাংলাদেশের সেরা রিয়েল এস্টেট সুযোগগুলি আবিষ্কার করুন",
+    "buttons": {
+      "exploreProperties": "সম্পত্তি অন্বেষণ করুন",
+      "getConsultation": "বিশেষজ্ঞ পরামর্শ নিন"
+    },
+    "stats": {
+      "propertiesListed": "তালিকাভুক্ত সম্পত্তি",
+      "happyClients": "সন্তুষ্ট ক্লায়েন্ট",
+      "expertAgents": "বিশেষজ্ঞ এজেন্ট"
+    },
+    "slides": {
+      "historicModernArchitecture": {
+        "title": "ঐতিহাসিক আধুনিক স্থাপত্য",
+        "subtitle": "সুন্দর ঐতিহ্যবাহী বাংলাদেশী স্থাপত্য"
+      },
+      "traditionalBangladeshHeritage": {
+        "title": "প্রচলিত বাংলাদেশি ঐতিহ্য",
+        "subtitle": "আমাদের সাংস্কৃতিক স্থাপত্যের সৌন্দর্য আবিষ্কার করুন"
+      },
+      "ruralBangladeshBeauty": {
+        "title": "গ্রামীণ বাংলাদেশের সৌন্দর্য",
+        "subtitle": "প্রাকৃতিক গ্রামীণ পরিবেশ উপভোগ করুন"
+      },
+      "modernApartmentsDhaka": {
+        "title": "ঢাকার আধুনিক অ্যাপার্টমেন্ট",
+        "subtitle": "শহরের কেন্দ্রে প্রিমিয়াম আবাসন"
+      },
+      "investmentOpportunities": {
+        "title": "বিনিয়োগের সুযোগ",
+        "subtitle": "প্রধান সম্পত্তি নিয়ে আপনার ভবিষ্যৎ সুরক্ষিত করুন"
+      }
+    }
+  },
+  
+  "propertyTypes": {
+    "mainTitle": "সম্পত্তির ধরনসমূহ",
+    "subTitle": "আপনি যা খুঁজছেন ঠিক সেটি খুঁজে পেতে বিভাগ অনুযায়ী সম্পত্তি ব্রাউজ করুন",
+    "residential": {
+      "title": "আবাসিক",
+      "description": "আপার্টমেন্ট, ভিলা, বাড়ি",
+      "count": "২,৫০০+ সম্পত্তি"
+    },
+    "commercial": {
+      "title": "বাণিজ্যিক",
+      "description": "অফিস, কোওয়ার্কিং স্পেস",
+      "count": "৮৫০+ সম্পত্তি"
+    },
+    "industrial": {
+      "title": "শিল্প",
+      "description": "দোকান, শোরুম, মল",
+      "count": "২,৫০০+ সম্পত্তি"
+    },
+    "land": {
+      "title": "জমি ও প্লট",
+      "description": "প্লট, কৃষি জমি",
+      "count": "৯০০+ সম্পত্তি"
+    },
+    "warehouse": {
+      "title": "গুদামঘর",
+      "description": "গুদামঘর, কারখানা",
+      "count": "৪৫০+ সম্পত্তি"
+    },
+    "hotel": {
+      "title": "হোটেল ও রিসোর্ট",
+      "description": "আচ্ছাদিত, খোলা পার্কিং",
+      "count": "৩৫০+ সম্পত্তি"
+    }
+  }
+}
+

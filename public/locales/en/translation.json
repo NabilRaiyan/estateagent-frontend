@@ -1,0 +1,125 @@
+{
+  "Buy": "Buy",
+  "Homes for sale": "Homes for sale",
+  "Foreclosures": "Foreclosures",
+  "For sale by owner": "For sale by owner",
+  "Open houses": "Open houses",
+  "New construction": "New construction",
+  "Coming soon": "Coming soon",
+  "Recent home sales": "Recent home sales",
+  "All homes": "All homes",
+  "Resources": "Resources",
+  "Home Buying Guide": "Home Buying Guide",
+  "Foreclosure Center": "Foreclosure Center",
+  "Real Estate App": "Real Estate App",
+  "Down Payment Assistance": "Down Payment Assistance",
+  "Rent": "Rent",
+  "Apartments for rent": "Apartments for rent",
+  "Houses for rent": "Houses for rent",
+  "All rental listings": "All rental listings",
+  "All rental buildings": "All rental buildings",
+  "Your Search": "Your Search",
+  "Saved searches": "Saved searches",
+  "Inbox": "Inbox",
+  "Contacted rentals": "Contacted rentals",
+  "Applications": "Applications",
+  "Rent with NestifyBD": "Rent with NestifyBD",
+  "Build your credit": "Build your credit",
+  "Renters insurance": "Renters insurance",
+  "Affordability calculator": "Affordability calculator",
+  "Rent Guide": "Rent Guide",
+  "Sell": "Sell",
+  "Sell your home": "Sell your home",
+  "Home value": "Home value",
+  "Local experts": "Local experts",
+  "Home Selling Guide": "Home Selling Guide",
+  "Pricing Strategies": "Pricing Strategies",
+  "Lease": "Lease",
+  "Lease your home": "Lease your home",
+  "Lease your property": "Lease your property",
+  "Get Mortgage": "Get Mortgage",
+  "Mortgage rates": "Mortgage rates",
+  "Refinance rates": "Refinance rates",
+  "Mortgage Calculator": "Mortgage Calculator",
+  "Mortgage Guide": "Mortgage Guide",
+  "Login": "Login",
+  "Signup": "Signup",
+  "English": "English",
+  "বাংলা": "বাংলা",
+  "Toggle mobile menu": "Toggle mobile menu",
+  "Toggle language": "Toggle language",
+  "logoAlt": "NestifyBD Logo",
+
+  "hero": {
+    "mainTitle": "Find Your Dream Property",
+    "mainSubtitle": "Discover the best real estate opportunities in Bangladesh",
+    "buttons": {
+      "exploreProperties": "Explore Properties",
+      "getConsultation": "Get Expert Consultation"
+    },
+    "stats": {
+      "propertiesListed": "Properties Listed",
+      "happyClients": "Happy Clients",
+      "expertAgents": "Expert Agents"
+    },
+    "slides": {
+      "historicModernArchitecture": {
+        "title": "Historic Modern Architecture",
+        "subtitle": "Beautiful traditional Bangladeshi architecture"
+      },
+      "traditionalBangladeshHeritage": {
+        "title": "Traditional Bangladesh Heritage",
+        "subtitle": "Discover the beauty of our cultural landmarks"
+      },
+      "ruralBangladeshBeauty": {
+        "title": "Rural Bangladesh Beauty",
+        "subtitle": "Experience the natural countryside charm"
+      },
+      "modernApartmentsDhaka": {
+        "title": "Modern Apartments in Dhaka",
+        "subtitle": "Premium living spaces in the heart of the city"
+      },
+      "investmentOpportunities": {
+        "title": "Investment Opportunities",
+        "subtitle": "Secure your future with prime properties"
+      }
+    }
+  },
+
+  "propertyTypes": {
+    "mainTitle": "Property Types",
+    "subTitle": "Browse properties by category to find exactly what you're looking for",
+    "residential": {
+      "title": "Residential",
+      "description": "Apartments, Villas, Houses",
+      "count": "2,500+ Properties"
+    },
+    "commercial": {
+      "title": "Commercial",
+      "description": "Offices, Coworking Spaces",
+      "count": "850+ Properties"
+    },
+    "industrial": {
+      "title": "Industrial",
+      "description": "Shops, Showrooms, Malls",
+      "count": "2,500+ Properties"
+    },
+    "land": {
+      "title": "Land & Plots",
+      "description": "Plots, Agricultural Land",
+      "count": "900+ Properties"
+    },
+    "warehouse": {
+      "title": "Warehouses",
+      "description": "Warehouses, Factories",
+      "count": "450+ Properties"
+    },
+    "hotel": {
+      "title": "Hotels & Resorts",
+      "description": "Covered, Open Parking",
+      "count": "350+ Properties"
+    }
+  }
+}
+
+

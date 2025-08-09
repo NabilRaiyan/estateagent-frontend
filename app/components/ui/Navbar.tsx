@@ -10,8 +10,10 @@ import Image from "next/image";
 import { Menu as MuiMenu, MenuItem, Button } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 
+import i18n from "../../../i18n"; // Make sure this path is correct
+import { useTranslation } from "react-i18next";
+
 const menuData = [
-  // ... your existing menuData unchanged ...
   {
     label: "Buy",
     items: [
@@ -120,14 +122,14 @@ const menuData = [
 ];
 
 const Navbar = () => {
+  const { t } = useTranslation();
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
-  // Language state: "en" or "bn"
-  const [language, setLanguage] = useState<"en" | "bn">("en");
+  const [language, setLanguage] = useState<"en" | "bn">(i18n.language === "bn" ? "bn" : "en");
 
-  // Language dropdown anchor element
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -149,13 +151,10 @@ const Navbar = () => {
 
   useEffect(() => {
     return () => {
-      if (closeTimeout.current) {
-        clearTimeout(closeTimeout.current);
-      }
+      if (closeTimeout.current) clearTimeout(closeTimeout.current);
     };
   }, []);
 
-  // Language dropdown handlers
   const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -165,9 +164,10 @@ const Navbar = () => {
   };
 
   const handleLanguageSelect = (lang: "en" | "bn") => {
-    setLanguage(lang);
-    setAnchorEl(null);
-    // TODO: Trigger full app language change here
+    i18n.changeLanguage(lang).then(() => {
+      setLanguage(lang);
+      setAnchorEl(null);
+    });
   };
 
   return (
@@ -178,7 +178,7 @@ const Navbar = () => {
           <Link href="/" className="block h-full flex items-center">
             <Image
               src="/logo1.jpeg"
-              alt="NestifyBD Logo"
+              alt={t("logoAlt", "NestifyBD Logo")} // translate alt text, fallback to default
               width={150}
               height={150}
               className="object-contain max-h-full"
@@ -197,7 +197,7 @@ const Navbar = () => {
               onMouseLeave={handleMouseLeave}
             >
               <button className="flex items-center space-x-1 hover:text-blue-600 transition-colors duration-300">
-                <span>{menu.label}</span>
+                <span>{t(menu.label)}</span>
                 <KeyboardArrowDown fontSize="small" />
               </button>
 
@@ -224,13 +224,13 @@ const Navbar = () => {
                           href={item.href}
                           className="block py-2 border-b border-gray-100 last:border-b-0 rounded-md px-2 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium"
                         >
-                          {item.label}
+                          {t(item.label)}
                         </Link>
                       ))
                     ) : (
                       <>
                         <div className="text-blue-700 font-semibold mb-5 text-lg border-b border-blue-200 pb-2 cursor-default select-none">
-                          {group.title}
+                          {t(group.title)}
                         </div>
                         {group.children.map((child) => (
                           <Link
@@ -238,7 +238,7 @@ const Navbar = () => {
                             href={child.href}
                             className="block py-2 border-b border-gray-100 last:border-b-0 pl-4 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 font-medium"
                           >
-                            {child.label}
+                            {t(child.label)}
                           </Link>
                         ))}
                       </>
@@ -262,7 +262,7 @@ const Navbar = () => {
               startIcon={<LanguageIcon />}
               className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition capitalize"
             >
-              {language === "en" ? "English" : "বাংলা"}
+              {language === "en" ? t("English") : t("বাংলা")}
             </Button>
             <MuiMenu
               id="language-menu"
@@ -282,13 +282,13 @@ const Navbar = () => {
                 selected={language === "en"}
                 onClick={() => handleLanguageSelect("en")}
               >
-                🇬🇧 English
+                🇬🇧 {t("English")}
               </MenuItem>
               <MenuItem
                 selected={language === "bn"}
                 onClick={() => handleLanguageSelect("bn")}
               >
-                🇧🇩 বাংলা
+                🇧🇩 {t("বাংলা")}
               </MenuItem>
             </MuiMenu>
           </div>
@@ -298,13 +298,13 @@ const Navbar = () => {
             href="/login"
             className="px-4 py-2 text-sm font-semibold text-[#2a6071] border border-[#2a6071] rounded hover:bg-blue-50 transition"
           >
-            Login
+            {t("Login")}
           </Link>
           <Link
             href="/signup"
             className="px-4 py-2 text-sm font-semibold text-white bg-[#2a6071] rounded hover:bg-blue-700 transition"
           >
-            Signup
+            {t("Signup")}
           </Link>
         </div>
 
@@ -312,7 +312,7 @@ const Navbar = () => {
         <button
           className="lg:hidden text-black ml-auto"
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-          aria-label="Toggle mobile menu"
+          aria-label={t("Toggle mobile menu")}
         >
           {isMobileMenuOpen ? <Close fontSize="large" /> : <Menu fontSize="large" />}
         </button>
@@ -325,12 +325,12 @@ const Navbar = () => {
           <div className="flex justify-center px-6 py-4 border-b border-gray-200">
             <button
               onClick={() =>
-                setLanguage((prev) => (prev === "en" ? "bn" : "en"))
+                handleLanguageSelect(language === "en" ? "bn" : "en")
               }
-              aria-label="Toggle language"
+              aria-label={t("Toggle language")}
               className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition"
             >
-              {language === "en" ? "English" : "বাংলা"}
+              {language === "en" ? t("English") : t("বাংলা")}
             </button>
           </div>
 
@@ -345,7 +345,7 @@ const Navbar = () => {
                 aria-expanded={mobileDropdown === menu.label}
                 aria-controls={`${menu.label}-submenu`}
               >
-                <span>{menu.label}</span>
+                <span>{t(menu.label)}</span>
                 <KeyboardArrowDown
                   fontSize="small"
                   className={`transform transition-transform duration-300 ${
@@ -365,19 +365,19 @@ const Navbar = () => {
                             href={item.href}
                             className="block py-2 text-gray-700 hover:text-blue-600"
                           >
-                            {item.label}
+                            {t(item.label)}
                           </Link>
                         ))
                       ) : (
                         <>
-                          <div className="font-semibold mb-2">{group.title}</div>
+                          <div className="font-semibold mb-2">{t(group.title)}</div>
                           {group.children.map((child) => (
                             <Link
                               key={child.label}
                               href={child.href}
                               className="block py-2 pl-4 text-gray-600 hover:text-blue-600"
                             >
-                              {child.label}
+                              {t(child.label)}
                             </Link>
                           ))}
                         </>
@@ -395,13 +395,13 @@ const Navbar = () => {
               href="/login"
               className="px-6 py-2 text-sm font-semibold text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition"
             >
-              Login
+              {t("Login")}
             </Link>
             <Link
               href="/signup"
               className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition"
             >
-              Signup
+              {t("Signup")}
             </Link>
           </div>
         </div>

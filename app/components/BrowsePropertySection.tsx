@@ -25,147 +25,192 @@ const propertyTypes = [
 
 // Initial dummy data
 const propertiesData = [
-  
   {
-    "id": 1,
-    "title": "Modern Flat in Banani",
-    "location": "Banani",
-    "type": "Flat/Apartment",
-    "priceTk": 8500000,
-    "imageSrc": "/hero-img-1.jpg",
-    "status": "For Sale",
-    "rating": 4.8,
-    "bhk": 3,
-    "washroom": 2,
-    "sqft": 1400,
-    "agentName": "Raiyan Al Sultan",
-    "isWishlisted": false
+    id: 1,
+    title: "Modern Flat in Banani",
+    location: "Banani",
+    type: "Flat/Apartment",
+    priceTk: 8500000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Sale",
+    rating: 4.8,
+    bhk: 3,
+    washroom: 2,
+    sqft: 1400,
+    agentName: "Raiyan Al Sultan",
+    isWishlisted: false,
   },
   {
-    "id": 2,
-    "title": "Luxury Villa in Gulshan",
-    "location": "Gulshan",
-    "type": "Villa",
-    "priceTk": 25000000,
-    "imageSrc": "/hero-img-2.jpg",
-    "status": "For Sale",
-    "rating": 4.9,
-    "bhk": 5,
-    "washroom": 4,
-    "sqft": 3500,
-    "agentName": "Mahir Rahaman",
-    "isWishlisted": true
+    id: 2,
+    title: "Luxury Villa in Gulshan",
+    location: "Gulshan",
+    type: "Villa",
+    priceTk: 25000000,
+    imageSrc: "/hero-img-2.jpg",
+    status: "For Sale",
+    rating: 4.9,
+    bhk: 5,
+    washroom: 4,
+    sqft: 3500,
+    agentName: "Mahir Rahaman",
+    isWishlisted: true,
   },
   {
-    "id": 3,
-    "title": "Spacious Duplex in Rampura",
-    "location": "Rampura",
-    "type": "Duplex",
-    "priceTk": 12000000,
-    "imageSrc": "/hero-img-3.jpg",
-    "status": "For Rent",
-    "rating": 4.3,
-    "bhk": 4,
-    "washroom": 3,
-    "sqft": 2800,
-    "agentName": "Nazim Uddin",
-    "isWishlisted": false
+    id: 3,
+    title: "Spacious Duplex in Rampura",
+    location: "Rampura",
+    type: "Duplex",
+    priceTk: 12000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Rent",
+    rating: 4.3,
+    bhk: 4,
+    washroom: 3,
+    sqft: 2800,
+    agentName: "Nazim Uddin",
+    isWishlisted: false,
   },
   {
-    "id": 4,
-    "title": "Office Space in Agrabad",
-    "location": "Agrabad",
-    "type": "Office",
-    "priceTk": 7000000,
-    "imageSrc": "/hero-img-1.jpg",
-    "status": "For Rent",
-    "rating": 4.2,
-    "bhk": 0,
-    "washroom": 2,
-    "sqft": 1500,
-    "agentName": "Sabbir Khan",
-    "isWishlisted": false
+    id: 4,
+    title: "Office Space in Agrabad",
+    location: "Agrabad",
+    type: "Office",
+    priceTk: 7000000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Rent",
+    rating: 4.2,
+    bhk: 0,
+    washroom: 2,
+    sqft: 1500,
+    agentName: "Sabbir Khan",
+    isWishlisted: false,
   },
   {
-    "id": 5,
-    "title": "Shop for Sale in Pahartali",
-    "location": "Pahartali",
-    "type": "Shop",
-    "priceTk": 4000000,
-    "imageSrc": "/hero-img-2.jpg",
-    "status": "For Sale",
-    "rating": 4.0,
-    "bhk": 0,
-    "washroom": 1,
-    "sqft": 900,
-    "agentName": "Fahim Ahmed",
-    "isWishlisted": true
+    id: 5,
+    title: "Shop for Sale in Pahartali",
+    location: "Pahartali",
+    type: "Shop",
+    priceTk: 4000000,
+    imageSrc: "/hero-img-2.jpg",
+    status: "For Sale",
+    rating: 4.0,
+    bhk: 0,
+    washroom: 1,
+    sqft: 900,
+    agentName: "Fahim Ahmed",
+    isWishlisted: true,
   },
   {
-    "id": 6,
-    "title": "Warehouse Space in Gulshan",
-    "location": "Gulshan",
-    "type": "Warehouse",
-    "priceTk": 15000000,
-    "imageSrc": "/hero-img-3.jpg",
-    "status": "For Rent",
-    "rating": 4.5,
-    "bhk": 0,
-    "washroom": 2,
-    "sqft": 5000,
-    "agentName": "Raihan Chowdhury",
-    "isWishlisted": false
+    id: 6,
+    title: "Warehouse Space in Gulshan",
+    location: "Gulshan",
+    type: "Warehouse",
+    priceTk: 15000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Rent",
+    rating: 4.5,
+    bhk: 0,
+    washroom: 2,
+    sqft: 5000,
+    agentName: "Raihan Chowdhury",
+    isWishlisted: false,
   },
   {
-    "id": 7,
-    "title": "Agricultural Land in Zindabazar",
-    "location": "Zindabazar",
-    "type": "Agricultural",
-    "priceTk": 3000000,
-    "imageSrc": "/hero-img-1.jpg",
-    "status": "For Sale",
-    "rating": 4.1,
-    "bhk": 0,
-    "washroom": 0,
-    "sqft": 10000,
-    "agentName": "Sadia Islam",
-    "isWishlisted": false
+    id: 7,
+    title: "Agricultural Land in Zindabazar",
+    location: "Zindabazar",
+    type: "Agricultural",
+    priceTk: 3000000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Sale",
+    rating: 4.1,
+    bhk: 0,
+    washroom: 0,
+    sqft: 10000,
+    agentName: "Sadia Islam",
+    isWishlisted: false,
   },
   {
-    "id": 8,
-    "title": "Industrial Plot in Amberkhana",
-    "location": "Amberkhana",
-    "type": "Industrial",
-    "priceTk": 18000000,
-    "imageSrc": "/hero-img-2.jpg",
-    "status": "For Sale",
-    "rating": 4.6,
-    "bhk": 0,
-    "washroom": 0,
-    "sqft": 12000,
-    "agentName": "Arif Hasan",
-    "isWishlisted": true
+    id: 8,
+    title: "Industrial Plot in Amberkhana",
+    location: "Amberkhana",
+    type: "Industrial",
+    priceTk: 18000000,
+    imageSrc: "/hero-img-2.jpg",
+    status: "For Sale",
+    rating: 4.6,
+    bhk: 0,
+    washroom: 0,
+    sqft: 12000,
+    agentName: "Arif Hasan",
+    isWishlisted: true,
   },
   {
-    "id": 9,
-    "title": "Residential Plot in Rampura",
-    "location": "Rampura",
-    "type": "Plot",
-    "priceTk": 6000000,
-    "imageSrc": "/hero-img-3.jpg",
-    "status": "For Sale",
-    "rating": 4.3,
-    "bhk": 0,
-    "washroom": 0,
-    "sqft": 3000,
-    "agentName": "Nazim Uddin",
-    "isWishlisted": false
-  }
+    id: 9,
+    title: "Residential Plot in Rampura",
+    location: "Rampura",
+    type: "Plot",
+    priceTk: 6000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Sale",
+    rating: 4.3,
+    bhk: 0,
+    washroom: 0,
+    sqft: 3000,
+    agentName: "Nazim Uddin",
+    isWishlisted: false,
+  },
+  {
+    id: 10,
+    title: "Residential Plot in Rampura",
+    location: "Rampura",
+    type: "Plot",
+    priceTk: 6000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Sale",
+    rating: 4.3,
+    bhk: 0,
+    washroom: 0,
+    sqft: 3000,
+    agentName: "Nazim Uddin",
+    isWishlisted: false,
+  },
+  {
+    id: 11,
+    title: "Residential Plot in Rampura",
+    location: "Rampura",
+    type: "Plot",
+    priceTk: 6000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Sale",
+    rating: 4.3,
+    bhk: 0,
+    washroom: 0,
+    sqft: 3000,
+    agentName: "Nazim Uddin",
+    isWishlisted: false,
+  },
+  {
+    id: 12,
+    title: "Residential Plot in Rampura",
+    location: "Rampura",
+    type: "Plot",
+    priceTk: 6000000,
+    imageSrc: "/hero-img-3.jpg",
+    status: "For Sale",
+    rating: 4.3,
+    bhk: 0,
+    washroom: 0,
+    sqft: 3000,
+    agentName: "Nazim Uddin",
+    isWishlisted: false,
+  },
 ];
 
 export default function BrowsePropertySection() {
   const [properties, setProperties] = useState(propertiesData);
   const [filteredProperties, setFilteredProperties] = useState(propertiesData);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [filters, setFilters] = useState({
     propertyTypes: [] as string[],
@@ -182,15 +227,12 @@ export default function BrowsePropertySection() {
     },
   });
 
-  // Filter only when the "Apply" button is clicked, so no useEffect filtering here
-  // We'll pass a function to apply filters manually
+  const ITEMS_PER_PAGE = 6;
 
   // Toggle wishlist for a property id
   const toggleWishlist = (id: number) => {
     setProperties((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, isWishlisted: !p.isWishlisted } : p
-      )
+      prev.map((p) => (p.id === id ? { ...p, isWishlisted: !p.isWishlisted } : p))
     );
   };
 
@@ -225,16 +267,12 @@ export default function BrowsePropertySection() {
 
     if (newFilters.enabledFilters.priceRange) {
       filtered = filtered.filter(
-        (p) =>
-          p.priceTk >= newFilters.priceRange[0] &&
-          p.priceTk <= newFilters.priceRange[1]
+        (p) => p.priceTk >= newFilters.priceRange[0] && p.priceTk <= newFilters.priceRange[1]
       );
     }
 
     if (newFilters.enabledFilters.districtAreas && newFilters.districtAreas.length > 0) {
-      filtered = filtered.filter((p) =>
-        newFilters.districtAreas.includes(p.location)
-      );
+      filtered = filtered.filter((p) => newFilters.districtAreas.includes(p.location));
     }
 
     if (newFilters.enabledFilters.bhk && newFilters.bhk) {
@@ -250,20 +288,30 @@ export default function BrowsePropertySection() {
 
     if (newFilters.enabledFilters.sqftRange) {
       filtered = filtered.filter(
-        (p) =>
-          p.sqft >= newFilters.sqftRange[0] && p.sqft <= newFilters.sqftRange[1]
+        (p) => p.sqft >= newFilters.sqftRange[0] && p.sqft <= newFilters.sqftRange[1]
       );
     }
 
     setFilteredProperties(filtered);
+    setCurrentPage(1);
+  };
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
+  const paginatedProperties = filteredProperties.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
   };
 
   return (
     <section className="py-16 bg-gradient-to-r from-white to-orange-50 min-h-screen">
       {/* Title */}
-      <h2 className="text-5xl font-bold text-center text-zinc-800 mb-4">
-        Browse Properties
-      </h2>
+      <h2 className="text-5xl font-bold text-center text-zinc-800 mb-4">Browse Properties</h2>
       <p className="text-xl font-normal text-center text-zinc-800 mb-10">
         Find your perfect property with our advanced search and filtering options
       </p>
@@ -286,7 +334,7 @@ export default function BrowsePropertySection() {
 
         {/* Right: Property Cards */}
         <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 h-full">
-          {filteredProperties.map((property) => (
+          {paginatedProperties.map((property) => (
             <PropertyCard
               key={property.id}
               imageSrc={property.imageSrc}
@@ -306,6 +354,37 @@ export default function BrowsePropertySection() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="max-w-7xl mx-auto mt-8 flex mt-5 justify-center gap-3">
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+        >
+          Prev
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => goToPage(page)}
+            className={`px-4 py-2 rounded ${
+              page === currentPage ? "bg-gradient-to-r from-[#2a6071] to-cyan-500  text-white" : "bg-gray-200"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </section>
   );

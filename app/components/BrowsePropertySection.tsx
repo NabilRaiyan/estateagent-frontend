@@ -370,7 +370,7 @@ export default function BrowsePropertySection() {
           <button
             key={page}
             onClick={() => goToPage(page)}
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded cursor-pointer ${
               page === currentPage ? "bg-gradient-to-r from-[#2a6071] to-cyan-500  text-white" : "bg-gray-200"
             }`}
           >

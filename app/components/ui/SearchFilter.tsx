@@ -7,6 +7,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HomeIcon from "@mui/icons-material/Home";
 import SellIcon from "@mui/icons-material/Sell";
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
 
 interface SearchFilterProps {
   locations: string[];
@@ -18,7 +20,7 @@ interface SearchFilterProps {
   }) => void;
 }
 
-const SERVICE_TYPES = ["Buy", "Rent", "Sell"];
+const SERVICE_TYPES = ["Buy", "Rent", "Sell", "Lease"];
 
 // Changed SERVICE_ICONS to a function returning icon with conditional color
 function getServiceIcon(type: string, selected: boolean) {
@@ -30,6 +32,8 @@ function getServiceIcon(type: string, selected: boolean) {
       return <HomeIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
     case "Sell":
       return <SellIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
+    case "Lease":
+      return <AssignmentIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
     default:
       return null;
   }

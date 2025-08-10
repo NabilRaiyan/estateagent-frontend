@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useTranslation } from "react-i18next";
 
 import PropertyCard from "./ui/PropertyCard";
 import { Button } from "./ui/Button";
@@ -10,14 +11,14 @@ import { Button } from "./ui/Button";
 interface Property {
   id: string;
   imageSrc: string;
-  status: string;
+  statusKey: string;
   rating: number;
-  title: string;
-  location: string;
+  titleKey: string;
+  locationKey: string;
   bhk: number;
   washroom: number;
   sqft: number;
-  agentName: string;
+  agentNameKey: string;
   priceTk: number;
   isWishlisted?: boolean;
   detailsUrl?: string;
@@ -27,90 +28,93 @@ const sampleProperties: Property[] = [
   {
     id: "1",
     imageSrc: "/hero-img-3.jpg",
-    status: "For Rent",
+    statusKey: "featured.status.forRent",
     rating: 4.5,
-    title: "Modern Family Home",
-    location: "Dhanmondi, Dhaka",
+    titleKey: "featured.titles.modernFamilyHome",
+    locationKey: "featured.locations.dhanmondi",
     bhk: 3,
     washroom: 2,
     sqft: 1850,
-    agentName: "John Doe",
+    agentNameKey: "featured.agents.johnDoe",
     priceTk: 75000,
     isWishlisted: false,
   },
   {
     id: "2",
     imageSrc: "/hero-img-2.jpg",
-    status: "For Sale",
+    statusKey: "featured.status.forSale",
     rating: 4.8,
-    title: "Luxury Villa with Pool",
-    location: "Gulshan, Dhaka",
+    titleKey: "featured.titles.luxuryVilla",
+    locationKey: "featured.locations.gulshan",
     bhk: 5,
     washroom: 4,
     sqft: 3500,
-    agentName: "Jane Smith",
+    agentNameKey: "featured.agents.janeSmith",
     priceTk: 350000,
     isWishlisted: true,
   },
   {
     id: "3",
     imageSrc: "/hero-img-1.jpg",
-    status: "For Sale",
+    statusKey: "featured.status.forSale",
     rating: 4.5,
-    title: "Modern Family Home",
-    location: "Dhanmondi, Dhaka",
+    titleKey: "featured.titles.modernFamilyHome",
+    locationKey: "featured.locations.dhanmondi",
     bhk: 6,
     washroom: 4,
     sqft: 2250,
-    agentName: "John Doe",
+    agentNameKey: "featured.agents.johnDoe",
     priceTk: 90000,
     isWishlisted: false,
   },
   {
     id: "4",
     imageSrc: "/hero-img-5.jpg",
-    status: "For Sale",
+    statusKey: "featured.status.forSale",
     rating: 4.5,
-    title: "Modern Family Home",
-    location: "Dhanmondi, Dhaka",
+    titleKey: "featured.titles.modernFamilyHome",
+    locationKey: "featured.locations.dhanmondi",
     bhk: 6,
     washroom: 4,
     sqft: 2250,
-    agentName: "John Doe",
+    agentNameKey: "featured.agents.johnDoe",
     priceTk: 90000,
     isWishlisted: false,
   },
   {
     id: "5",
     imageSrc: "/hero-img-3.jpg",
-    status: "For Rent",
+    statusKey: "featured.status.forRent",
     rating: 4.5,
-    title: "Modern Family Home",
-    location: "Dhanmondi, Dhaka",
+    titleKey: "featured.titles.modernFamilyHome",
+    locationKey: "featured.locations.dhanmondi",
     bhk: 3,
     washroom: 2,
     sqft: 1850,
-    agentName: "John Doe",
+    agentNameKey: "featured.agents.johnDoe",
     priceTk: 75000,
     isWishlisted: false,
   },
   {
     id: "6",
     imageSrc: "/hero-img-3.jpg",
-    status: "For Rent",
+    statusKey: "featured.status.forRent",
     rating: 4.5,
-    title: "Modern Family Home",
-    location: "Dhanmondi, Dhaka",
+    titleKey: "featured.titles.modernFamilyHome",
+    locationKey: "featured.locations.dhanmondi",
     bhk: 3,
     washroom: 2,
     sqft: 1850,
-    agentName: "John Doe",
+    agentNameKey: "featured.agents.johnDoe",
     priceTk: 75000,
     isWishlisted: false,
   },
+  
 ];
 
 export default function FeaturedPropertySection() {
+  const { t } = useTranslation();
+
   const [properties, setProperties] = useState(
     sampleProperties.map((p) => ({
       ...p,
@@ -131,7 +135,7 @@ export default function FeaturedPropertySection() {
   };
 
   const shareProperty = (id: string) => {
-    alert(`Share clicked for property ID: ${id}`);
+    alert(t("featured.alert.share", { id }));
   };
 
   return (
@@ -140,15 +144,14 @@ export default function FeaturedPropertySection() {
         className="text-4xl font-bold text-zinc-800 mb-8 text-center"
         data-aos="fade-up"
       >
-        Featured Properties
+        {t("featured.title")}
       </h2>
       <p
         className="text-lg font-medium text-zinc-500 mb-8 mt-2 text-center"
         data-aos="fade-up"
         data-aos-delay={100}
       >
-        Discover our handpicked selection of premium properties across <br />
-        Bangladesh&apos;s prime locations
+        {t("featured.subtitle")}
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
@@ -161,6 +164,10 @@ export default function FeaturedPropertySection() {
           >
             <PropertyCard
               {...property}
+              status={t(property.statusKey)}
+              title={t(property.titleKey)}
+              location={t(property.locationKey)}
+              agentName={t(property.agentNameKey)}
               onWishlistClick={() => toggleWishlist(property.id)}
               onShareClick={() => shareProperty(property.id)}
             />
@@ -180,7 +187,7 @@ export default function FeaturedPropertySection() {
           variant="default"
           className="text-lg px-8 bg-gradient-to-r cursor-pointer from-[#2a6071] to-cyan-500 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-cyan-400"
         >
-          More Properties
+          {t("featured.moreBtn")}
         </Button>
       </div>
     </section>

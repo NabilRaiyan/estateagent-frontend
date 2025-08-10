@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { ServicesSection } from "./components/ServiceSection";
 import PropertyTypeSection from "./components/PropertyTypeSection";
 import FeaturedPropertySection from "./components/FeaturedPropertySection";
+import BrowsePropertySection from "./components/BrowsePropertySection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
     <PropertyTypeSection/>
     <ServicesSection/>
     <FeaturedPropertySection/>
+    <BrowsePropertySection/>
     </>
   );
 }

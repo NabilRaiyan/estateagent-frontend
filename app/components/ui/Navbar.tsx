@@ -8,7 +8,7 @@ import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import Image from "next/image";
 
 import { Menu as MuiMenu, MenuItem, Button } from "@mui/material";
-import LanguageIcon from "@mui/icons-material/Language";
+import TranslateIcon from '@mui/icons-material/Translate';
 
 import i18n from "../../../i18n"; // Make sure this path is correct
 import { useTranslation } from "react-i18next";
@@ -259,7 +259,7 @@ const Navbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleLangMenuOpen}
-              startIcon={<LanguageIcon />}
+              startIcon={<TranslateIcon />}
               className="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-100 transition capitalize"
             >
               {language === "en" ? t("English") : t("বাংলা")}

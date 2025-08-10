@@ -119,7 +119,65 @@
       "description": "Covered, Open Parking",
       "count": "350+ Properties"
     }
+  },
+  
+  "services": {
+    "mainTitle": "Find. Buy. Sell. Rent. All in One Place.",
+    "subTitle": "We offer a wide range of property services tailored to your needs. Whether you want to buy, sell, rent, lease, or finance a property, we are here to help.",
+    "buy": {
+      "title": "Buy Properties",
+      "description": "Find your perfect home from thousands of listings tailored to your needs.",
+      "cta": "Explore Buying"
+    },
+    "sell": {
+      "title": "Sell Properties",
+      "description": "List your property with us and reach millions of potential buyers quickly.",
+      "cta": "Start Selling"
+    },
+    "rent": {
+      "title": "Rent Properties",
+      "description": "Browse available rental homes and apartments in your desired locations.",
+      "cta": "Browse Rentals"
+    },
+    "lease": {
+      "title": "Lease Properties",
+      "description": "Flexible leasing options for residential and commercial properties.",
+      "cta": "Learn More"
+    },
+    "mortgage": {
+      "title": "Mortgage Services",
+      "description": "Get expert advice and competitive rates to finance your dream property.",
+      "cta": "Get Mortgage Help"
+    }
+  },
+  
+  "featured": {
+    "title": "Featured Properties",
+    "subtitle": "Discover our handpicked selection of premium properties across Bangladesh's prime locations",
+    "moreBtn": "More Properties",
+    "viewDetails": "View Details",
+    "status": {
+      "forSale": "For Sale",
+      "forRent": "For Rent"
+    },
+    "titles": {
+      "modernFamilyHome": "Modern Family Home",
+      "luxuryVilla": "Luxury Villa with Pool"
+    },
+    "locations": {
+      "dhanmondi": "Dhanmondi, Dhaka",
+      "gulshan": "Gulshan, Dhaka"
+    },
+    "agents": {
+      "johnDoe": "John Doe",
+      "janeSmith": "Jane Smith"
+    },
+    "alert": {
+      "share": "Share clicked for property ID: {{id}}"
+    }
   }
 }
+
+
 
 

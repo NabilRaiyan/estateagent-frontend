@@ -4,89 +4,84 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useTranslation } from "react-i18next";
 
 import ServiceCard from "./ui/ServiceCard";
 
 const services = [
   {
-    title: "Buy Properties",
+    titleKey: "services.buy.title",
     imageSrc: "/service/buy.jpg",
-    description:
-      "Find your perfect home from thousands of listings tailored to your needs.",
-    ctaText: "Explore Buying",
+    descriptionKey: "services.buy.description",
+    ctaKey: "services.buy.cta",
     link: "/buy-properties",
   },
   {
-    title: "Sell Properties",
+    titleKey: "services.sell.title",
     imageSrc: "/service/sell.jpg",
-    description:
-      "List your property with us and reach millions of potential buyers quickly.",
-    ctaText: "Start Selling",
+    descriptionKey: "services.sell.description",
+    ctaKey: "services.sell.cta",
     link: "/sell-properties",
   },
   {
-    title: "Rent Properties",
+    titleKey: "services.rent.title",
     imageSrc: "/service/rent.jpg",
-    description:
-      "Browse available rental homes and apartments in your desired locations.",
-    ctaText: "Browse Rentals",
+    descriptionKey: "services.rent.description",
+    ctaKey: "services.rent.cta",
     link: "/rent-properties",
   },
   {
-    title: "Lease Properties",
+    titleKey: "services.lease.title",
     imageSrc: "/service/lease.jpg",
-    description:
-      "Flexible leasing options for residential and commercial properties.",
-    ctaText: "Learn More",
+    descriptionKey: "services.lease.description",
+    ctaKey: "services.lease.cta",
     link: "/lease-properties",
   },
   {
-    title: "Mortgage Services",
+    titleKey: "services.mortgage.title",
     imageSrc: "/service/mortgage.jpg",
-    description:
-      "Get expert advice and competitive rates to finance your dream property.",
-    ctaText: "Get Mortgage Help",
+    descriptionKey: "services.mortgage.description",
+    ctaKey: "services.mortgage.cta",
     link: "/mortgage-services",
   },
 ];
 
 export const ServicesSection = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16">
+    <section className="w-full max-w-full mx-auto px-6 md:px-12 lg:px-24 py-12 bg-gradient-to-r from-white to-orange-50">
       <h2
         className="text-3xl text-gray-950 font-bold text-center mb-4"
         data-aos="fade-up"
       >
-        Find. Buy. Sell. Rent. All in One Place.
+        {t("services.mainTitle")}
       </h2>
       <p
         className="text-center text-gray-600 max-w-2xl mx-auto mb-10"
         data-aos="fade-up"
         data-aos-delay="100"
       >
-        We offer a wide range of property services tailored to your needs.
-        Whether you want to buy, sell, rent, lease, or finance a property, we
-        are here to help.
+        {t("services.subTitle")}
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {services.map(({ title, imageSrc, description, ctaText, link }, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4 items-stretch">
+        {services.map(({ titleKey, imageSrc, descriptionKey, ctaKey, link }, index) => (
           <div
-            key={title}
+            key={titleKey}
             data-aos="zoom-in"
             data-aos-delay={index * 100}
           >
             <ServiceCard
-              title={title}
+              title={t(titleKey)}
               imageSrc={imageSrc}
-              description={description}
-              ctaText={ctaText}
+              description={t(descriptionKey)}
+              ctaText={t(ctaKey)}
               onClick={() => router.push(link)}
             />
           </div>

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface PropertyCardProps {
   imageSrc: string;
@@ -43,6 +44,8 @@ export default function PropertyCard({
   isWishlisted = false,
   detailsUrl,
 }: PropertyCardProps) {
+  const { t } = useTranslation();
+
   return (
     <div
       className="
@@ -149,7 +152,7 @@ export default function PropertyCard({
                   hover:-translate-y-1 hover:scale-105 hover:shadow-xl
                 "
               >
-                View Details
+              {t("featured.viewDetails")}
               </Link>
             </div>
           )}

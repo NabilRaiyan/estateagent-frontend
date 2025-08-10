@@ -62,7 +62,7 @@ export default function PropertyTypeSection() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12">
+    <section className="max-w-full mx-auto px-20 py-12 bg-gradient-to-r from-white to-orange-50">
       <h2
         className="text-5xl text-zinc-700 font-bold text-center mb-5"
         data-aos="fade-up"

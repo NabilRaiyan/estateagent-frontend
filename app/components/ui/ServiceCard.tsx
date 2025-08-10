@@ -22,7 +22,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 }) => {
   return (
     <div
-      className="max-w-xs bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer flex flex-col h-full"
+      className="max-w-full bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer flex flex-col h-full"
       // Added h-full and flex flex-col to stretch full height and enable flex layout
       onClick={onClick}
       role={onClick ? "button" : undefined}

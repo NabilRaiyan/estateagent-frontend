@@ -5,6 +5,7 @@ import PropertyFilter from "./ui/PropertyFilter";
 import SearchFilter from "./ui/SearchFilter";
 import PropertyCard from "./ui/PropertyCard";
 import SortDropdown from "./ui/SortComponent";
+import { Button } from "./ui/Button";
 
 
 const locations = [
@@ -546,6 +547,14 @@ export default function BrowsePropertySection() {
         >
           Next
         </button>
+        <Button
+          href="/properties"
+          size="lg"
+          variant="default"
+          className="text-lg px-8 bg-gradient-to-r cursor-pointer from-[#2a6071] to-cyan-500 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-cyan-400"
+        >
+          More Properties
+        </Button>
       </div>
     </section>
   );

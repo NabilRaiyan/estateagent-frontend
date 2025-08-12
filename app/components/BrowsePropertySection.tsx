@@ -547,15 +547,19 @@ export default function BrowsePropertySection() {
         >
           Next
         </button>
+        
+      </div>
+      <div className="flex justify-center mt-16" data-aos='zoom-in'>
         <Button
           href="/properties"
           size="lg"
           variant="default"
-          className="text-lg px-8 bg-gradient-to-r cursor-pointer from-[#2a6071] to-cyan-500 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-cyan-400"
+          className="text-lg px-8 bg-gradient-to-r cursor-pointer from-[#2a6071] to-cyan-500 transition-all justify-center items-center duration-300 hover:scale-105 hover:ring-2 hover:ring-cyan-400"
         >
           More Properties
         </Button>
       </div>
+
     </section>
   );
 }

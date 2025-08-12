@@ -140,23 +140,40 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
     setBhk("");
     setSqftRange([500, 5000]);
     setEnabledFilters({
-      propertyTypes: true,
-      priceRange: true,
-      districtAreas: true,
-      bhk: true,
-      sqftRange: true,
+      propertyTypes: false,
+      priceRange: false,
+      districtAreas: false,
+      bhk: false,
+      sqftRange: false,
     });
+
+    // Send default "no filter" state to parent so it shows all cards
+  if (onFilterChangeRef.current) {
+    onFilterChangeRef.current({
+      propertyTypes: [],
+      priceRange: [0, 0],
+      districtAreas: [],
+      bhk: "",
+      sqftRange: [0, 0],
+      enabledFilters: {
+        propertyTypes: false,
+        priceRange: false,
+        districtAreas: false,
+        bhk: false,
+        sqftRange: false,
+      },
+    });
+  }
   };
 
-  // NEW: Apply Filters on button click
-  const applyFilters = () => {
+    const applyFilters = () => {
     if (onFilterChange) {
       onFilterChange({
         propertyTypes: enabledFilters.propertyTypes ? selectedTypes : [],
-        priceRange: enabledFilters.priceRange ? priceRange : [0, 0],
+        priceRange: enabledFilters.priceRange ? priceRange : [0, 0], // [min, max]
         districtAreas: enabledFilters.districtAreas ? selectedDistrictAreas : [],
         bhk: enabledFilters.bhk ? bhk : "",
-        sqftRange: enabledFilters.sqftRange ? sqftRange : [0, 0],
+        sqftRange: enabledFilters.sqftRange ? sqftRange : [0, 0], // [min, max]
         enabledFilters,
       });
     }

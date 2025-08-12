@@ -21,6 +21,7 @@ const propertyTypes = [
   "Garage",
   "Villa",
   "Plot",
+  "Warehouse"
 ];
 
 // Initial dummy data
@@ -29,10 +30,10 @@ const propertiesData = [
     id: 1,
     title: "Modern Flat in Banani",
     location: "Banani",
-    type: "Flat/Apartment",
+    type: "Apartment",
     priceTk: 8500000,
     imageSrc: "/hero-img-1.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.8,
     bhk: 3,
     washroom: 2,
@@ -47,7 +48,7 @@ const propertiesData = [
     type: "Villa",
     priceTk: 25000000,
     imageSrc: "/hero-img-2.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.9,
     bhk: 5,
     washroom: 4,
@@ -87,12 +88,12 @@ const propertiesData = [
   },
   {
     id: 5,
-    title: "Shop for Sale in Pahartali",
+    title: "Shop for Sell in Pahartali",
     location: "Pahartali",
     type: "Shop",
     priceTk: 4000000,
     imageSrc: "/hero-img-2.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.0,
     bhk: 0,
     washroom: 1,
@@ -122,7 +123,7 @@ const propertiesData = [
     type: "Agricultural",
     priceTk: 3000000,
     imageSrc: "/hero-img-1.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.1,
     bhk: 0,
     washroom: 0,
@@ -137,7 +138,7 @@ const propertiesData = [
     type: "Industrial",
     priceTk: 18000000,
     imageSrc: "/hero-img-2.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.6,
     bhk: 0,
     washroom: 0,
@@ -152,7 +153,7 @@ const propertiesData = [
     type: "Plot",
     priceTk: 6000000,
     imageSrc: "/hero-img-3.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.3,
     bhk: 0,
     washroom: 0,
@@ -167,7 +168,7 @@ const propertiesData = [
     type: "Plot",
     priceTk: 6000000,
     imageSrc: "/hero-img-3.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.3,
     bhk: 0,
     washroom: 0,
@@ -182,7 +183,7 @@ const propertiesData = [
     type: "Plot",
     priceTk: 6000000,
     imageSrc: "/hero-img-3.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.3,
     bhk: 0,
     washroom: 0,
@@ -197,12 +198,57 @@ const propertiesData = [
     type: "Plot",
     priceTk: 6000000,
     imageSrc: "/hero-img-3.jpg",
-    status: "For Sale",
+    status: "For Sell",
     rating: 4.3,
     bhk: 0,
     washroom: 0,
     sqft: 3000,
     agentName: "Nazim Uddin",
+    isWishlisted: false,
+  },
+  {
+    id: 13,
+    title: "Modern Flat in Banani",
+    location: "Banani",
+    type: "Apartment",
+    priceTk: 8500000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Lease",
+    rating: 4.8,
+    bhk: 3,
+    washroom: 2,
+    sqft: 1400,
+    agentName: "Raiyan Al Sultan",
+    isWishlisted: false,
+  },
+  {
+    id: 14,
+    title: "Modern Flat in Gulshan",
+    location: "Gulshan",
+    type: "Apartment",
+    priceTk: 8500000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Lease",
+    rating: 4.8,
+    bhk: 3,
+    washroom: 2,
+    sqft: 1400,
+    agentName: "Raiyan Al Sultan",
+    isWishlisted: false,
+  },
+  {
+    id: 15,
+    title: "Modern Flat in Banani",
+    location: "Gulshan",
+    type: "Warehouse",
+    priceTk: 8500000,
+    imageSrc: "/hero-img-1.jpg",
+    status: "For Sell",
+    rating: 4.8,
+    bhk: 3,
+    washroom: 2,
+    sqft: 1400,
+    agentName: "Raiyan Al Sultan",
     isWishlisted: false,
   },
 ];
@@ -211,6 +257,9 @@ export default function BrowsePropertySection() {
   const [properties, setProperties] = useState(propertiesData);
   const [filteredProperties, setFilteredProperties] = useState(propertiesData);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Added to track the selected tab
+  const [serviceType, setServiceType] = useState<string>("");
 
   const [filters, setFilters] = useState({
     propertyTypes: [] as string[],
@@ -229,14 +278,12 @@ export default function BrowsePropertySection() {
 
   const ITEMS_PER_PAGE = 6;
 
-  // Toggle wishlist for a property id
   const toggleWishlist = (id: number) => {
     setProperties((prev) =>
       prev.map((p) => (p.id === id ? { ...p, isWishlisted: !p.isWishlisted } : p))
     );
   };
 
-  // Share handler
   const handleShare = (propertyTitle: string, propertyId: number) => {
     const url = `${window.location.origin}/property/${propertyId}`;
     if (navigator.share) {
@@ -251,7 +298,66 @@ export default function BrowsePropertySection() {
     }
   };
 
-  // This function applies the filter when called
+  // New helper to filter by serviceType, location, propertyType
+  const filterProperties = (service: string, location: string, propertyType: string) => {
+    let filtered = properties;
+
+    // Fix: Map "Sell" to "For Sell" correctly
+    const statusMap: Record<string, string> = {
+      Buy: "For Sell",
+      Sell: "For Sell",
+      Rent: "For Rent",
+      Lease: "For Lease",
+    };
+
+    if (service) {
+      const mappedStatus = statusMap[service];
+      if (mappedStatus) {
+        filtered = filtered.filter((p) => p.status === mappedStatus);
+      }
+    }
+
+    if (location) {
+      filtered = filtered.filter((p) =>
+        p.location.toLowerCase().includes(location.toLowerCase())
+      );
+    }
+
+    if (propertyType) {
+      filtered = filtered.filter(
+        (p) => p.type.toLowerCase() === propertyType.toLowerCase()
+      );
+    }
+
+    return filtered;
+  };
+
+  // New: Handle tab clicks — filter instantly by tab, clear inputs
+  const handleTabClick = (tab: string) => {
+    setServiceType(tab);
+    // On tab click, filter by tab only (clear location and propertyType filters)
+    const filtered = filterProperties(tab, "", "");
+    setFilteredProperties(filtered);
+    setCurrentPage(1);
+
+    // TODO: You need to clear location and propertyType input fields inside SearchFilter UI on tab click.
+    // You can do this by adding a prop callback or useEffect in SearchFilter component.
+  };
+
+  // Modified handleSearch to use current serviceType and inputs, and clear inputs after search
+  const handleSearch = (searchFilters: {
+    serviceType: string; // ignored, we use serviceType from tab state
+    location: string;
+    propertyType: string;
+  }) => {
+    // Use current serviceType state (tab) + location + propertyType
+    const filtered = filterProperties(serviceType, searchFilters.location, searchFilters.propertyType);
+    setFilteredProperties(filtered);
+    setCurrentPage(1);
+
+    // TODO: Clear inputs after search in SearchFilter component itself
+  };
+
   const applyFilters = (newFilters: typeof filters) => {
     setFilters(newFilters);
 
@@ -296,7 +402,6 @@ export default function BrowsePropertySection() {
     setCurrentPage(1);
   };
 
-  // Pagination calculations
   const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
   const paginatedProperties = filteredProperties.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -310,29 +415,26 @@ export default function BrowsePropertySection() {
 
   return (
     <section className="py-16 bg-gradient-to-r from-white to-orange-50 min-h-screen">
-      {/* Title */}
       <h2 className="text-5xl font-bold text-center text-zinc-800 mb-4">Browse Properties</h2>
       <p className="text-xl font-normal text-center text-zinc-800 mb-10">
         Find your perfect property with our advanced search and filtering options
       </p>
 
-      {/* SearchFilter centered */}
       <div className="max-w-4xl mx-auto mb-12">
         <SearchFilter
           locations={locations}
           propertyTypes={propertyTypes}
-          onSearch={() => {}} // your search handler here
+          onSearch={handleSearch}
+          onTabClick={handleTabClick} // Added this prop — you need to handle tab clicks inside SearchFilter component
+          selectedServiceType={serviceType} // Optional: pass selected tab to SearchFilter for UI highlight
         />
       </div>
 
-      {/* Main content: PropertyFilter on left, Cards on right */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 px-4">
-        {/* Left: PropertyFilter */}
         <div className="md:w-1/3">
           <PropertyFilter onFilterChange={applyFilters} />
         </div>
 
-        {/* Right: Property Cards */}
         <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 h-full">
           {paginatedProperties.map((property) => (
             <PropertyCard
@@ -356,7 +458,6 @@ export default function BrowsePropertySection() {
         </div>
       </div>
 
-      {/* Pagination Controls */}
       <div className="max-w-7xl mx-auto mt-8 flex mt-5 justify-center gap-3">
         <button
           onClick={() => goToPage(currentPage - 1)}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,7 +8,6 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import HomeIcon from "@mui/icons-material/Home";
 import SellIcon from "@mui/icons-material/Sell";
 import AssignmentIcon from '@mui/icons-material/Assignment';
-
 
 interface SearchFilterProps {
   locations: string[];
@@ -18,11 +17,14 @@ interface SearchFilterProps {
     location: string;
     propertyType: string;
   }) => void;
+
+  onTabClick?: (serviceType: string) => void;
+  selectedServiceType?: string;
 }
 
-const SERVICE_TYPES = ["Buy", "Rent", "Sell", "Lease"];
+const SERVICE_TYPES = ["Buy", "Rent", "Lease"];
 
-// Changed SERVICE_ICONS to a function returning icon with conditional color
+// Icon helper
 function getServiceIcon(type: string, selected: boolean) {
   const colorClass = selected ? "text-white" : "text-cyan-500";
   switch (type) {
@@ -30,8 +32,8 @@ function getServiceIcon(type: string, selected: boolean) {
       return <AttachMoneyIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
     case "Rent":
       return <HomeIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
-    case "Sell":
-      return <SellIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
+    // case "Sell":
+    //   return <SellIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
     case "Lease":
       return <AssignmentIcon className={`w-5 h-5 mr-2 ${colorClass}`} />;
     default:
@@ -43,14 +45,41 @@ export default function SearchFilter({
   locations,
   propertyTypes,
   onSearch,
+  onTabClick,
+  selectedServiceType,
 }: SearchFilterProps) {
   const [serviceType, setServiceType] = useState(SERVICE_TYPES[0]);
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState(propertyTypes[0] || "");
 
+  // Sync internal serviceType if selectedServiceType changes (from parent)
+  useEffect(() => {
+    if (selectedServiceType && selectedServiceType !== serviceType) {
+      setServiceType(selectedServiceType);
+      setLocation("");
+      setPropertyType(propertyTypes[0] || "");
+    }
+  }, [selectedServiceType, propertyTypes]);
+
+  // Handle tab click: update state, clear inputs, notify parent
+  const handleTabClick = (type: string) => {
+    setServiceType(type);
+    setLocation("");
+    setPropertyType(propertyTypes[0] || "");
+
+    if (onTabClick) {
+      onTabClick(type);
+    }
+  };
+
+  // On search form submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch({ serviceType, location, propertyType });
+
+    // Clear input fields after search
+    setLocation("");
+    setPropertyType(propertyTypes[0] || "");
   };
 
   return (
@@ -58,15 +87,18 @@ export default function SearchFilter({
       onSubmit={handleSubmit}
       className="max-w-5xl mx-auto bg-gradient-to-r from-white via-orange-50 to-orange-100 rounded-xl shadow-md p-8"
     >
-      {/* First Row: Tabs for Service Type */}
+      {/* Tabs */}
       <div className="flex mb-6 rounded-xl overflow-hidden shadow-lg bg-gray-100 border border-gray-300">
         {SERVICE_TYPES.map((type, index) => {
-          const selected = serviceType === type;
+          const selected = selectedServiceType
+            ? selectedServiceType === type
+            : serviceType === type;
+
           return (
             <button
               type="button"
               key={type}
-              onClick={() => setServiceType(type)}
+              onClick={() => handleTabClick(type)}
               className={`flex-1 flex items-center justify-center py-4 font-semibold text-sm md:text-base transition
                 ${
                   selected
@@ -89,9 +121,8 @@ export default function SearchFilter({
         })}
       </div>
 
-      {/* Second Row: Location input, Property Type select, Search button */}
+      {/* Search Inputs */}
       <div className="grid grid-cols-12 gap-6 items-center">
-        {/* Location Searchbar */}
         <div className="col-span-5 bg-gray-100 rounded-2xl border border-cyan-500 flex items-center px-5 py-3 focus-within:ring-2 focus-within:ring-cyan-400 transition-shadow duration-300 shadow-sm">
           <LocationOnIcon className="text-cyan-500 mr-3 w-6 h-6" />
           <input
@@ -110,7 +141,6 @@ export default function SearchFilter({
           </datalist>
         </div>
 
-        {/* Property Type Dropdown */}
         <div className="col-span-4 bg-gray-100 rounded-2xl border border-cyan-500 flex items-center px-5 py-3 focus-within:ring-2 focus-within:ring-cyan-400 transition-shadow duration-300 shadow-sm">
           <StorefrontIcon className="text-cyan-500 mr-3 w-6 h-6" />
           <select
@@ -126,7 +156,6 @@ export default function SearchFilter({
           </select>
         </div>
 
-        {/* Search Button */}
         <button
           type="submit"
           className="col-span-3 flex items-center justify-center gap-3 px-12 py-4 rounded-lg

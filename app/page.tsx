@@ -8,6 +8,7 @@ import BrowsePropertySection from "./components/BrowsePropertySection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import CTASection from "./components/ui/CTAComponent";
 import StatsSection from "./components/StatsSection";
+import Footer from "./components/ui/Footer";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
     <WhyChooseUsSection/>
     <CTASection/>
     <StatsSection/>
+    <Footer/>
     </>
   );
 }

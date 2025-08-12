@@ -85,7 +85,7 @@ export default function SearchFilter({
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-5xl mx-auto bg-gradient-to-r from-white via-orange-50 to-orange-100 rounded-xl shadow-md p-8"
+      className="max-w-5xl mx-auto bg-gradient-to-r from-white via-orange-50 to-orange-100 rounded-xl shadow-xl shadow-orange-200 border-t-1 border-t-[#44aece] p-8"
     >
       {/* Tabs */}
       <div className="flex mb-6 rounded-xl overflow-hidden shadow-lg bg-gray-100 border border-gray-300">

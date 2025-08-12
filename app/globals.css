@@ -20,6 +20,8 @@ html{
   --font-second: var(--font-work); /* Reference to the imported Work_Sans font */
   --font-third: var(--font-almendra);
   --font-gothic: 'MedievalSharp', cursive;
+  --gradient-start: #2a6071;
+  --gradient-end: #06b6d4;
 }
 
 /* Global Styles */

@@ -4,6 +4,8 @@ import { useState } from "react";
 import PropertyFilter from "./ui/PropertyFilter";
 import SearchFilter from "./ui/SearchFilter";
 import PropertyCard from "./ui/PropertyCard";
+import SortDropdown from "./ui/SortComponent";
+
 
 const locations = [
   "Dhanmondi",
@@ -23,6 +25,15 @@ const propertyTypes = [
   "Plot",
   "Warehouse"
 ];
+
+// sorting data
+const sortOptions = [
+  { label: "Sort By Price: High to Low", value: "priceDesc" },
+  { label: "Sort By Price: Low to High", value: "priceAsc" },
+  { label: "Sort By Newest", value: "newest" },
+  { label: "Hot Deals", value: "hotDeals" },
+];
+
 
 // Initial dummy data
 const propertiesData = [
@@ -80,7 +91,7 @@ const propertiesData = [
     imageSrc: "/hero-img-1.jpg",
     status: "For Rent",
     rating: 4.2,
-    bhk: 0,
+    bhk: 3,
     washroom: 2,
     sqft: 1500,
     agentName: "Sabbir Khan",
@@ -95,7 +106,7 @@ const propertiesData = [
     imageSrc: "/hero-img-2.jpg",
     status: "For Sell",
     rating: 4.0,
-    bhk: 0,
+    bhk: 3,
     washroom: 1,
     sqft: 900,
     agentName: "Fahim Ahmed",
@@ -110,7 +121,7 @@ const propertiesData = [
     imageSrc: "/hero-img-3.jpg",
     status: "For Rent",
     rating: 4.5,
-    bhk: 0,
+    bhk: 3,
     washroom: 2,
     sqft: 5000,
     agentName: "Raihan Chowdhury",
@@ -125,8 +136,8 @@ const propertiesData = [
     imageSrc: "/hero-img-1.jpg",
     status: "For Sell",
     rating: 4.1,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 3,
     sqft: 10000,
     agentName: "Sadia Islam",
     isWishlisted: false,
@@ -140,8 +151,8 @@ const propertiesData = [
     imageSrc: "/hero-img-2.jpg",
     status: "For Sell",
     rating: 4.6,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 3,
     sqft: 12000,
     agentName: "Arif Hasan",
     isWishlisted: true,
@@ -155,8 +166,8 @@ const propertiesData = [
     imageSrc: "/hero-img-3.jpg",
     status: "For Sell",
     rating: 4.3,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 3,
     sqft: 3000,
     agentName: "Nazim Uddin",
     isWishlisted: false,
@@ -170,8 +181,8 @@ const propertiesData = [
     imageSrc: "/hero-img-3.jpg",
     status: "For Sell",
     rating: 4.3,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 3,
     sqft: 3000,
     agentName: "Nazim Uddin",
     isWishlisted: false,
@@ -185,8 +196,8 @@ const propertiesData = [
     imageSrc: "/hero-img-3.jpg",
     status: "For Sell",
     rating: 4.3,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 3,
     sqft: 3000,
     agentName: "Nazim Uddin",
     isWishlisted: false,
@@ -200,8 +211,8 @@ const propertiesData = [
     imageSrc: "/hero-img-3.jpg",
     status: "For Sell",
     rating: 4.3,
-    bhk: 0,
-    washroom: 0,
+    bhk: 3,
+    washroom: 4,
     sqft: 3000,
     agentName: "Nazim Uddin",
     isWishlisted: false,
@@ -257,6 +268,8 @@ export default function BrowsePropertySection() {
   const [properties, setProperties] = useState(propertiesData);
   const [filteredProperties, setFilteredProperties] = useState(propertiesData);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState<string>(""); // default no sorting or "newest"
+
 
   // Added to track the selected tab
   const [serviceType, setServiceType] = useState<string>("");
@@ -283,6 +296,35 @@ export default function BrowsePropertySection() {
       prev.map((p) => (p.id === id ? { ...p, isWishlisted: !p.isWishlisted } : p))
     );
   };
+
+  // handle sort dropdown
+  const getSortedProperties = () => {
+    let sorted = [...filteredProperties];
+
+    switch (sortBy) {
+      case "priceDesc":
+        sorted.sort((a, b) => b.priceTk - a.priceTk);
+        break;
+      case "priceAsc":
+        sorted.sort((a, b) => a.priceTk - b.priceTk);
+        break;
+      case "newest":
+        // Assuming higher id means newer property
+        sorted.sort((a, b) => b.id - a.id);
+        break;
+      case "hotDeals":
+        // Example: properties with rating >= 4.5 considered hot deals, sorted by rating desc
+        sorted = sorted
+          .filter((p) => p.rating >= 4.5)
+          .sort((a, b) => b.rating - a.rating);
+        break;
+      default:
+        break; // no sorting, keep original order
+    }
+
+    return sorted;
+  };
+
 
   const handleShare = (propertyTitle: string, propertyId: number) => {
     const url = `${window.location.origin}/property/${propertyId}`;
@@ -331,6 +373,7 @@ export default function BrowsePropertySection() {
 
     return filtered;
   };
+
 
   // New: Handle tab clicks — filter instantly by tab, clear inputs
   const handleTabClick = (tab: string) => {
@@ -402,8 +445,10 @@ export default function BrowsePropertySection() {
     setCurrentPage(1);
   };
 
-  const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
-  const paginatedProperties = filteredProperties.slice(
+  const sortedProperties = getSortedProperties();
+
+  const totalPages = Math.ceil(sortedProperties.length / ITEMS_PER_PAGE);
+  const paginatedProperties = sortedProperties.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -416,11 +461,11 @@ export default function BrowsePropertySection() {
   return (
     <section className="py-16 bg-gradient-to-r from-white to-orange-50 min-h-screen">
       <h2 className="text-5xl font-bold text-center text-zinc-800 mb-4">Browse Properties</h2>
-      <p className="text-xl font-normal text-center text-zinc-800 mb-10">
+      <p className="text-xl font-normal text-center text-zinc-500 mb-10">
         Find your perfect property with our advanced search and filtering options
       </p>
 
-      <div className="max-w-4xl mx-auto mb-12">
+      <div className="max-w-4xl mx-auto mb-12" data-aos="zoom-in">
         <SearchFilter
           locations={locations}
           propertyTypes={propertyTypes}
@@ -430,39 +475,54 @@ export default function BrowsePropertySection() {
         />
       </div>
 
+        {/* Add SortDropdown here */}
+        <div className="flex justify-end mb-4 mr-[105px]">
+          <SortDropdown
+            options={sortOptions}
+            selectedValue={sortBy}
+            onChange={(value) => setSortBy(value)}
+          />
+        </div>
+
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 px-4">
         <div className="md:w-1/3">
           <PropertyFilter onFilterChange={applyFilters} />
         </div>
 
         <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 h-full">
-          {paginatedProperties.map((property) => (
-            <PropertyCard
+          {paginatedProperties.map((property, index) => (
+            <div
               key={property.id}
-              imageSrc={property.imageSrc}
-              status={property.status}
-              rating={property.rating}
-              title={property.title}
-              location={property.location}
-              bhk={property.bhk}
-              washroom={property.washroom}
-              sqft={property.sqft}
-              agentName={property.agentName}
-              priceTk={property.priceTk}
-              isWishlisted={property.isWishlisted}
-              onWishlistClick={() => toggleWishlist(property.id)}
-              onShareClick={() => handleShare(property.title, property.id)}
-              detailsUrl={`/property/${property.id}`}
-            />
+              data-aos="zoom-in"
+              data-aos-delay={index * 100}
+            >
+              <PropertyCard
+                imageSrc={property.imageSrc}
+                status={property.status}
+                rating={property.rating}
+                title={property.title}
+                location={property.location}
+                bhk={property.bhk}
+                washroom={property.washroom}
+                sqft={property.sqft}
+                agentName={property.agentName}
+                priceTk={property.priceTk}
+                isWishlisted={property.isWishlisted}
+                onWishlistClick={() => toggleWishlist(property.id)}
+                onShareClick={() => handleShare(property.title, property.id)}
+                detailsUrl={`/property/${property.id}`}
+              />
+            </div>
           ))}
         </div>
+
       </div>
 
       <div className="max-w-7xl mx-auto mt-8 flex mt-5 justify-center gap-3">
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gradient-to-r from-[#2a6071] to-cyan-500 font-bold rounded disabled:opacity-50"
         >
           Prev
         </button>
@@ -472,7 +532,7 @@ export default function BrowsePropertySection() {
             key={page}
             onClick={() => goToPage(page)}
             className={`px-4 py-2 rounded cursor-pointer ${
-              page === currentPage ? "bg-gradient-to-r from-[#2a6071] to-cyan-500  text-white" : "bg-gray-200"
+              page === currentPage ? "bg-gradient-to-r from-[#2a6071] to-cyan-500 font-semibold  text-white" : "bg-gray-300 font-semibold"
             }`}
           >
             {page}
@@ -482,7 +542,7 @@ export default function BrowsePropertySection() {
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gradient-to-r from-[#2a6071] to-cyan-500 font-bold rounded disabled:opacity-50"
         >
           Next
         </button>

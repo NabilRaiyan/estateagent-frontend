@@ -135,7 +135,7 @@ export const Hero = () => {
               href="/properties"
               variant="gradient"
               size="lg"
-              className="text-lg px-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
+              className="text-lg px-8 cursor-pointer text-zinc-800 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-amber-400"
             >
               {t("hero.buttons.exploreProperties")}
             </Button>

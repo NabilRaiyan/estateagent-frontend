@@ -103,22 +103,22 @@ const menuData = [
       },
     ],
   },
-  {
-    label: "Get Mortgage",
-    items: [
-      [
-        { label: "Mortgage rates", href: "/mortgage/rates" },
-        { label: "Refinance rates", href: "/mortgage/refinance" },
-      ],
-      {
-        title: "Resources",
-        children: [
-          { label: "Mortgage Calculator", href: "/mortgage/resources/calculator" },
-          { label: "Mortgage Guide", href: "/mortgage/resources/guide" },
-        ],
-      },
-    ],
-  },
+  // {
+  //   label: "Get Mortgage",
+  //   items: [
+  //     [
+  //       { label: "Mortgage rates", href: "/mortgage/rates" },
+  //       { label: "Refinance rates", href: "/mortgage/refinance" },
+  //     ],
+  //     {
+  //       title: "Resources",
+  //       children: [
+  //         { label: "Mortgage Calculator", href: "/mortgage/resources/calculator" },
+  //         { label: "Mortgage Guide", href: "/mortgage/resources/guide" },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 
 const Navbar = () => {

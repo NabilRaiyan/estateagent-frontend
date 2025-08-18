@@ -65,7 +65,7 @@ export default function PropertyCard({
           height={200}
         />
         {/* Status tag top-left */}
-        <span className="absolute top-3 left-3 bg-gradient-to-r from-[#2a6071] to-cyan-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+        <span className="absolute top-3 left-3 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 text-zinc-700 text-xs font-bold px-3 py-1 rounded-full shadow-md">
           {status}
         </span>
 

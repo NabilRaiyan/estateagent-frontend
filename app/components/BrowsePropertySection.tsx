@@ -485,7 +485,7 @@ export default function BrowsePropertySection() {
           />
         </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 px-4">
+      <div className="max-w-[90%] mx-auto flex flex-col md:flex-row gap-10 px-4">
         <div className="md:w-1/3">
           <PropertyFilter onFilterChange={applyFilters} />
         </div>
@@ -519,7 +519,7 @@ export default function BrowsePropertySection() {
 
       </div>
 
-      <div className="max-w-7xl mx-auto mt-8 flex mt-5 justify-center gap-3">
+      <div className="max-w-7xl mx-auto mt-8 flex justify-center gap-3">
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}

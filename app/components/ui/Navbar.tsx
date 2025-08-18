@@ -322,7 +322,8 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200 shadow-md">
           {/* Mobile language toggle */}
-          <div className="flex justify-center px-6 py-4 border-b border-gray-200">
+          <div className="flex text-zinc-800 justify-center px-6 py-4 border-b border-gray-400">
+            <span className="mr-2 text-[#2a6071]"><TranslateIcon /></span>
             <button
               onClick={() =>
                 handleLanguageSelect(language === "en" ? "bn" : "en")

@@ -14,9 +14,12 @@ import {
   Slider,
   Typography,
   useTheme,
+  Collapse,
 } from "@mui/material";
-import SquareFootIcon from '@mui/icons-material/SquareFoot';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { FaMapMarkerAlt, FaBed } from "react-icons/fa";
 import { MdOutlineCategory } from "react-icons/md";
@@ -41,21 +44,21 @@ interface PropertyFilterProps {
 export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) {
   const theme = useTheme();
 
-  // Nested property types
+  // Mobile collapse toggle
+  const [isOpenMobile, setIsOpenMobile] = useState(false);
+
+  // Filter state
   const [propertyTypeGroups, setPropertyTypeGroups] = useState<
     { category: string; subTypes: string[] }[]
   >([]);
-
   const [districts, setDistricts] = useState<{ name: string; areas: string[] }[]>([]);
 
-  // Selected filter values
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<number[]>([5000, 500000]);
   const [selectedDistrictAreas, setSelectedDistrictAreas] = useState<string[]>([]);
   const [bhk, setBhk] = useState("");
   const [sqftRange, setSqftRange] = useState<number[]>([500, 5000]);
 
-  // Enable toggles
   const [enabledFilters, setEnabledFilters] = useState({
     propertyTypes: false,
     priceRange: false,
@@ -64,7 +67,6 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
     sqftRange: false,
   });
 
-  // Store latest onFilterChange in a ref (optional)
   const onFilterChangeRef = useRef(onFilterChange);
   useEffect(() => {
     onFilterChangeRef.current = onFilterChange;
@@ -84,7 +86,7 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
     ]);
   }, []);
 
-  // PROPERTY TYPE logic
+  // Property Type handlers
   const handleSubTypeChange = (subType: string, checked: boolean) => {
     if (checked) setSelectedTypes([...selectedTypes, subType]);
     else setSelectedTypes(selectedTypes.filter((t) => t !== subType));
@@ -101,7 +103,7 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
     }
   };
 
-  // LOCATION logic
+  // Location handlers
   const handleDistrictToggle = (districtName: string, checked: boolean) => {
     const district = districts.find((d) => d.name === districtName);
     if (!district) return;
@@ -119,11 +121,7 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
 
   const handleDistrictAreaToggle = (districtName: string, area: string, checked: boolean) => {
     if (checked) {
-      setSelectedDistrictAreas((prev) => {
-        const updated = [...prev, area];
-        // optional: auto-select parent district if all areas selected
-        return Array.from(new Set(updated));
-      });
+      setSelectedDistrictAreas((prev) => Array.from(new Set([...prev, area])));
     } else {
       setSelectedDistrictAreas((prev) => prev.filter((a) => a !== area));
     }
@@ -147,322 +145,364 @@ export default function PropertyFilter({ onFilterChange }: PropertyFilterProps) 
       sqftRange: false,
     });
 
-    // Send default "no filter" state to parent so it shows all cards
-  if (onFilterChangeRef.current) {
-    onFilterChangeRef.current({
-      propertyTypes: [],
-      priceRange: [0, 0],
-      districtAreas: [],
-      bhk: "",
-      sqftRange: [0, 0],
-      enabledFilters: {
-        propertyTypes: false,
-        priceRange: false,
-        districtAreas: false,
-        bhk: false,
-        sqftRange: false,
-      },
-    });
-  }
+    if (onFilterChangeRef.current) {
+      onFilterChangeRef.current({
+        propertyTypes: [],
+        priceRange: [0, 0],
+        districtAreas: [],
+        bhk: "",
+        sqftRange: [0, 0],
+        enabledFilters: {
+          propertyTypes: false,
+          priceRange: false,
+          districtAreas: false,
+          bhk: false,
+          sqftRange: false,
+        },
+      });
+    }
   };
 
-    const applyFilters = () => {
+  const applyFilters = () => {
     if (onFilterChange) {
       onFilterChange({
         propertyTypes: enabledFilters.propertyTypes ? selectedTypes : [],
-        priceRange: enabledFilters.priceRange ? priceRange : [0, 0], // [min, max]
+        priceRange: enabledFilters.priceRange ? priceRange : [0, 0],
         districtAreas: enabledFilters.districtAreas ? selectedDistrictAreas : [],
         bhk: enabledFilters.bhk ? bhk : "",
-        sqftRange: enabledFilters.sqftRange ? sqftRange : [0, 0], // [min, max]
+        sqftRange: enabledFilters.sqftRange ? sqftRange : [0, 0],
         enabledFilters,
       });
     }
   };
 
   return (
-    <Paper
-      elevation={4}
-      sx={{
-        p: 5,
-        maxWidth: 420,
-        mx: "auto",
-        borderRadius: 3,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-      }}
-    >
-      <Typography
-        variant="h5"
+    <Box>
+      {/* Mobile toggle */}
+      <Box
         sx={{
-          fontWeight: "800",
-          mb: 4,
-          textAlign: "center",
-          color: theme.palette.text.primary,
-          letterSpacing: 0.5,
-          display: "flex",
+          display: { xs: "flex", md: "none" },
+          justifyContent: "space-between",
           alignItems: "center",
-          justifyContent: "center",
-          gap: 1,
+          mb: 2,
+          px: 2,
         }}
       >
-        <FilterAltIcon /> Filter Properties
-      </Typography>
+        <Typography variant="h6" className="text-zinc-800 font-semibold text-lg">Show / Hide Filters</Typography>
+        <Button
+          onClick={() => setIsOpenMobile(!isOpenMobile)}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.5,
+            textTransform: "none",
+          }}
+        >
+          {isOpenMobile ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+        </Button>
+      </Box>
 
-      <Box component="form" sx={{ display: "grid", gap: 4 }}>
-        {/* PROPERTY TYPE */}
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={enabledFilters.propertyTypes}
-                onChange={(e) => handleEnableToggle("propertyTypes", e.target.checked)}
-                sx={{ color: theme.palette.primary.main }}
-              />
-            }
-            label={
-              <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
-                <MdOutlineCategory /> Property Type
-              </Typography>
-            }
-          />
-          <Box
+      <Collapse in={isOpenMobile || window.innerWidth >= 900}>
+        <Paper
+          elevation={4}
+          sx={{
+            p: 5,
+            maxWidth: { xs: "95%", md: 420 },
+            mx: "auto",
+            borderRadius: 3,
+            backgroundColor: theme.palette.background.paper,
+            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+          }}
+        >
+          <Typography
+            variant="h5"
             sx={{
-              ml: 3,
-              opacity: enabledFilters.propertyTypes ? 1 : 0.4,
-              pointerEvents: enabledFilters.propertyTypes ? "auto" : "none",
+              fontWeight: "800",
+              mb: 4,
+              textAlign: "center",
+              color: theme.palette.text.primary,
+              letterSpacing: 0.5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
             }}
           >
-            {propertyTypeGroups.map((group) => {
-              const selectedCount = group.subTypes.filter((st) =>
-                selectedTypes.includes(st)
-              ).length;
-              const allSelected = selectedCount === group.subTypes.length;
-              const indeterminate =
-                selectedCount > 0 && selectedCount < group.subTypes.length;
+            <FilterAltIcon /> Filter Properties
+          </Typography>
 
-              return (
-                <Box key={group.category} sx={{ mb: 1 }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={allSelected}
-                        indeterminate={indeterminate}
-                        onChange={(e) =>
-                          handleCategoryChange(group.category, e.target.checked)
-                        }
-                      />
+          <Box component="form" sx={{ display: "grid", gap: 4 }}>
+            {/* PROPERTY TYPE */}
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={enabledFilters.propertyTypes}
+                    onChange={(e) =>
+                      handleEnableToggle("propertyTypes", e.target.checked)
                     }
-                    label={<Typography sx={{ fontWeight: 700 }}>{group.category}</Typography>}
+                    sx={{ color: theme.palette.primary.main }}
                   />
-                  <FormGroup sx={{ ml: 3 }}>
-                    {group.subTypes.map((sub) => (
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: 16,
+                      display: "flex",
+                      gap: 1,
+                    }}
+                  >
+                    <MdOutlineCategory /> Property Type
+                  </Typography>
+                }
+              />
+              <Box
+                sx={{
+                  ml: 3,
+                  opacity: enabledFilters.propertyTypes ? 1 : 0.4,
+                  pointerEvents: enabledFilters.propertyTypes ? "auto" : "none",
+                }}
+              >
+                {propertyTypeGroups.map((group) => {
+                  const selectedCount = group.subTypes.filter((st) =>
+                    selectedTypes.includes(st)
+                  ).length;
+                  const allSelected = selectedCount === group.subTypes.length;
+                  const indeterminate =
+                    selectedCount > 0 && selectedCount < group.subTypes.length;
+
+                  return (
+                    <Box key={group.category} sx={{ mb: 1 }}>
                       <FormControlLabel
-                        key={sub}
                         control={
                           <Checkbox
-                            checked={selectedTypes.includes(sub)}
-                            onChange={(e) => handleSubTypeChange(sub, e.target.checked)}
-                          />
-                        }
-                        label={sub}
-                      />
-                    ))}
-                  </FormGroup>
-                </Box>
-              );
-            })}
-          </Box>
-        </Box>
-
-        {/* PRICE RANGE */}
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={enabledFilters.priceRange}
-                onChange={(e) => handleEnableToggle("priceRange", e.target.checked)}
-              />
-            }
-            label={
-              <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
-                <TbCurrencyTaka /> Price Range
-              </Typography>
-            }
-          />
-          <Box
-            sx={{
-              ml: 3,
-              opacity: enabledFilters.priceRange ? 1 : 0.4,
-              pointerEvents: enabledFilters.priceRange ? "auto" : "none",
-            }}
-          >
-            <Slider
-              value={priceRange}
-              onChange={(_, val) => setPriceRange(val as number[])}
-              min={5000}
-              max={1000000}
-              step={5000}
-              sx={{ color: theme.palette.primary.main }}
-            />
-            <Typography
-              variant="body2"
-              sx={{ mt: 1, fontWeight: 700, color: theme.palette.primary.main }}
-            >
-              Min: Tk {priceRange[0].toLocaleString()} — Max: Tk {priceRange[1].toLocaleString()}
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* LOCATION */}
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={enabledFilters.districtAreas}
-                onChange={(e) => handleEnableToggle("districtAreas", e.target.checked)}
-              />
-            }
-            label={
-              <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
-                <FaMapMarkerAlt /> Location
-              </Typography>
-            }
-          />
-          <Box
-            sx={{
-              ml: 3,
-              maxHeight: 140,
-              overflowY: "auto",
-              opacity: enabledFilters.districtAreas ? 1 : 0.4,
-              pointerEvents: enabledFilters.districtAreas ? "auto" : "none",
-              borderRadius: 1,
-              p: 1,
-            }}
-          >
-            {districts.map((district) => {
-              const allAreas = district.areas;
-              const selectedCount = allAreas.filter((a) =>
-                selectedDistrictAreas.includes(a)
-              ).length;
-              const allSelected = selectedCount === allAreas.length;
-              const indeterminate =
-                selectedCount > 0 && selectedCount < allAreas.length;
-
-              return (
-                <Box key={district.name} sx={{ mb: 1 }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={allSelected}
-                        indeterminate={indeterminate}
-                        onChange={(e) => handleDistrictToggle(district.name, e.target.checked)}
-                      />
-                    }
-                    label={<Typography sx={{ fontWeight: 700 }}>{district.name}</Typography>}
-                  />
-                  <FormGroup sx={{ ml: 3 }}>
-                    {district.areas.map((area) => (
-                      <FormControlLabel
-                        key={area}
-                        control={
-                          <Checkbox
-                            checked={selectedDistrictAreas.includes(area)}
+                            checked={allSelected}
+                            indeterminate={indeterminate}
                             onChange={(e) =>
-                              handleDistrictAreaToggle(district.name, area, e.target.checked)
+                              handleCategoryChange(group.category, e.target.checked)
                             }
                           />
                         }
-                        label={area}
+                        label={
+                          <Typography sx={{ fontWeight: 700 }}>
+                            {group.category}
+                          </Typography>
+                        }
                       />
-                    ))}
-                  </FormGroup>
-                </Box>
-              );
-            })}
-          </Box>
-        </Box>
+                      <FormGroup sx={{ ml: 3 }}>
+                        {group.subTypes.map((sub) => (
+                          <FormControlLabel
+                            key={sub}
+                            control={
+                              <Checkbox
+                                checked={selectedTypes.includes(sub)}
+                                onChange={(e) =>
+                                  handleSubTypeChange(sub, e.target.checked)
+                                }
+                              />
+                            }
+                            label={sub}
+                          />
+                        ))}
+                      </FormGroup>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
 
-        {/* BHK */}
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={enabledFilters.bhk}
-                onChange={(e) => handleEnableToggle("bhk", e.target.checked)}
+            {/* PRICE RANGE */}
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={enabledFilters.priceRange}
+                    onChange={(e) => handleEnableToggle("priceRange", e.target.checked)}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
+                    <TbCurrencyTaka /> Price Range
+                  </Typography>
+                }
               />
-            }
-            label={
-              <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
-                <FaBed /> BHK Type
-              </Typography>
-            }
-          />
-          <FormControl fullWidth sx={{ ml: 3 }}>
-            <Select
-              value={bhk}
-              onChange={(e) => setBhk(e.target.value)}
-              disabled={!enabledFilters.bhk}
-              size="small"
-              displayEmpty
-            >
-              <MenuItem value="">Any</MenuItem>
-              <MenuItem value="1 BHK">1 BHK</MenuItem>
-              <MenuItem value="2 BHK">2 BHK</MenuItem>
-              <MenuItem value="3 BHK">3 BHK</MenuItem>
-              <MenuItem value="4+ BHK">4+ BHK</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+              <Box
+                sx={{
+                  ml: 3,
+                  opacity: enabledFilters.priceRange ? 1 : 0.4,
+                  pointerEvents: enabledFilters.priceRange ? "auto" : "none",
+                }}
+              >
+                <Slider
+                  value={priceRange}
+                  onChange={(_, val) => setPriceRange(val as number[])}
+                  min={5000}
+                  max={1000000}
+                  step={5000}
+                  sx={{ color: theme.palette.primary.main }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ mt: 1, fontWeight: 700, color: theme.palette.primary.main }}
+                >
+                  Min: Tk {priceRange[0].toLocaleString()} — Max: Tk {priceRange[1].toLocaleString()}
+                </Typography>
+              </Box>
+            </Box>
 
-        {/* SQFT */}
-        <Box>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={enabledFilters.sqftRange}
-                onChange={(e) => handleEnableToggle("sqftRange", e.target.checked)}
+            {/* LOCATION */}
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={enabledFilters.districtAreas}
+                    onChange={(e) => handleEnableToggle("districtAreas", e.target.checked)}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
+                    <FaMapMarkerAlt /> Location
+                  </Typography>
+                }
               />
-            }
-            label={
-              <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
-                <SquareFootIcon /> Size (SQFT)
-              </Typography>
-            }
-          />
-          <Box
-            sx={{
-              ml: 3,
-              opacity: enabledFilters.sqftRange ? 1 : 0.4,
-              pointerEvents: enabledFilters.sqftRange ? "auto" : "none",
-            }}
-          >
-            <Slider
-              value={sqftRange}
-              onChange={(_, val) => setSqftRange(val as number[])}
-              min={500}
-              max={10000}
-              step={100}
-              sx={{ color: theme.palette.primary.main }}
-            />
-            <Typography
-              variant="body2"
-              sx={{ mt: 1, fontWeight: 700, color: theme.palette.primary.main }}
-            >
-              Min: {sqftRange[0].toLocaleString()} sqft — Max: {sqftRange[1].toLocaleString()} sqft
-            </Typography>
-          </Box>
-        </Box>
+              <Box
+                sx={{
+                  ml: 3,
+                  maxHeight: 140,
+                  overflowY: "auto",
+                  opacity: enabledFilters.districtAreas ? 1 : 0.4,
+                  pointerEvents: enabledFilters.districtAreas ? "auto" : "none",
+                  borderRadius: 1,
+                  p: 1,
+                }}
+              >
+                {districts.map((district) => {
+                  const allAreas = district.areas;
+                  const selectedCount = allAreas.filter((a) =>
+                    selectedDistrictAreas.includes(a)
+                  ).length;
+                  const allSelected = selectedCount === allAreas.length;
+                  const indeterminate =
+                    selectedCount > 0 && selectedCount < allAreas.length;
 
-        {/* BUTTONS */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={handleClear}>
-            Clear All
-          </Button>
-          <Button variant="contained" color="primary" onClick={applyFilters}>
-            Apply Filters
-          </Button>
-        </Box>
-      </Box>
-    </Paper>
+                  return (
+                    <Box key={district.name} sx={{ mb: 1 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={allSelected}
+                            indeterminate={indeterminate}
+                            onChange={(e) => handleDistrictToggle(district.name, e.target.checked)}
+                          />
+                        }
+                        label={<Typography sx={{ fontWeight: 700 }}>{district.name}</Typography>}
+                      />
+                      <FormGroup sx={{ ml: 3 }}>
+                        {district.areas.map((area) => (
+                          <FormControlLabel
+                            key={area}
+                            control={
+                              <Checkbox
+                                checked={selectedDistrictAreas.includes(area)}
+                                onChange={(e) =>
+                                  handleDistrictAreaToggle(district.name, area, e.target.checked)
+                                }
+                              />
+                            }
+                            label={area}
+                          />
+                        ))}
+                      </FormGroup>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
+
+            {/* BHK */}
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={enabledFilters.bhk}
+                    onChange={(e) => handleEnableToggle("bhk", e.target.checked)}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
+                    <FaBed /> BHK Type
+                  </Typography>
+                }
+              />
+              <FormControl fullWidth sx={{ ml: 3 }}>
+                <Select
+                  value={bhk}
+                  onChange={(e) => setBhk(e.target.value)}
+                  disabled={!enabledFilters.bhk}
+                  size="small"
+                  displayEmpty
+                >
+                  <MenuItem value="">Any</MenuItem>
+                  <MenuItem value="1 BHK">1 BHK</MenuItem>
+                  <MenuItem value="2 BHK">2 BHK</MenuItem>
+                  <MenuItem value="3 BHK">3 BHK</MenuItem>
+                  <MenuItem value="4+ BHK">4+ BHK</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+
+            {/* SQFT */}
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={enabledFilters.sqftRange}
+                    onChange={(e) => handleEnableToggle("sqftRange", e.target.checked)}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontWeight: 700, fontSize: 16, display: "flex", gap: 1 }}>
+                    <SquareFootIcon /> Size (SQFT)
+                  </Typography>
+                }
+              />
+              <Box
+                sx={{
+                  ml: 3,
+                  opacity: enabledFilters.sqftRange ? 1 : 0.4,
+                  pointerEvents: enabledFilters.sqftRange ? "auto" : "none",
+                }}
+              >
+                <Slider
+                  value={sqftRange}
+                  onChange={(_, val) => setSqftRange(val as number[])}
+                  min={500}
+                  max={10000}
+                  step={100}
+                  sx={{ color: theme.palette.primary.main }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ mt: 1, fontWeight: 700, color: theme.palette.primary.main }}
+                >
+                  Min: {sqftRange[0].toLocaleString()} sqft — Max: {sqftRange[1].toLocaleString()} sqft
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* BUTTONS */}
+            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+              <Button variant="outlined" color="secondary" onClick={handleClear}>
+                Clear All
+              </Button>
+              <Button variant="contained" color="primary" onClick={applyFilters}>
+                Apply Filters
+              </Button>
+            </Box>
+          </Box>
+        </Paper>
+      </Collapse>
+    </Box>
   );
 }

@@ -145,7 +145,7 @@ export default function PropertyCard({
                 href={detailsUrl}
                 className="
                   inline-block w-full text-center 
-                  bg-gradient-to-r from-[#2a6071] to-cyan-500 
+                  bg-[#2a6071] 
                   text-white font-semibold py-2 rounded-lg 
                   shadow-lg
                   transform transition-all duration-200

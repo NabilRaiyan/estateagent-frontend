@@ -16,6 +16,10 @@ import { useTranslation } from "react-i18next";
 
 const menuData = [
   {
+    label: "Home",
+    href: "/"
+  },
+  {
     label: "Buy",
     items: [
       [
@@ -180,7 +184,7 @@ const Navbar = () => {
         </div>
 
         {/* Centered Menu */}
-        <div className="hidden lg:flex flex-1 justify-center text-black shadow-sm max-w-2xl bg-slate-50 shadow-cyan-500/50 p-1 mt-3 font-medium space-x-6 rounded-full">
+        <div className="hidden lg:flex flex-1 justify-center text-black shadow-sm max-w-2xl bg-slate-50 shadow-cyan-500/50 p-2 mt-3 font-medium space-x-4 rounded-full">
           {menuData.map((menu) => {
             const isActive = isActiveSection(menu.label, menu.href);
             
@@ -190,9 +194,9 @@ const Navbar = () => {
                 <Link
                   key={menu.label}
                   href={menu.href}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 ${
+                  className={`flex items-center space-x-1 px-3 py-2 rounded-full transition-all duration-300 ${
                     isActive 
-                      ? "bg-[#2a6071] text-white" 
+                      ? "bg-[#357487] text-white" 
                       : "hover:text-blue-600 hover:bg-blue-50"
                   }`}
                 >

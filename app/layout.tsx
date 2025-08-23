@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AOSProvider from "./components/AOSProvider";
 import I18nextProviderWrapper from "./components/ui/I18nextProviderWrapper";
+import Breadcrumbs from "./components/ui/Breadcrumbs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Breadcrumbs/>
         <I18nextProviderWrapper>
           <AOSProvider>{children}</AOSProvider>
         </I18nextProviderWrapper>

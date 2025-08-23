@@ -67,7 +67,7 @@ const menuData = [
       {
         title: "Resources",
         children: [
-          { label: "Rent with NestifyBD", href: "/rent/resources/rent-with-zillow" },
+          { label: "Rent with NestifyBD", href: "/rent/resources/rent-with-nestifybd" },
           { label: "Build your credit", href: "/rent/resources/credit" },
           { label: "Renters insurance", href: "/rent/resources/insurance" },
           { label: "Affordability calculator", href: "/rent/resources/affordability" },

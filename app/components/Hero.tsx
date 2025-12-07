@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "../components/ui/Button";
 import { useState, useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css";
+// import "aos/dist/aos.css";
 import { useTranslation } from "react-i18next";
 import { 
   VerifiedIcon, 

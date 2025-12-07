@@ -166,6 +166,7 @@ const Navbar = () => {
     });
   };
 
+  
   return (
     <nav className="w-full sticky top-0 bg-gradient-to-b from-orange-50 to-white z-50">
       <div className="mx-auto flex items-center justify-between px-4 py-3 lg:py-4 h-[74px] bg-white">

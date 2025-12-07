@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NestifyBD | Real Estate, Buy, Sell, Rent Property In Bangladesh",
+  title: "EstateAgent | Real Estate, Buy, Sell, Rent Property In Bangladesh",
   description:
-    "NestifyBD agents are among the most experienced in the industry and can help you win in today's market. Find an agent. alt. Mortgage. Rocket Mortgage delivers .",
+    "EstateAgent agents are among the most experienced in the industry and can help you win in today's market. Find an agent. alt. Mortgage. Rocket Mortgage delivers .",
 };
 
 // Since lang depends on i18n language, we keep <html lang="en"> static here,

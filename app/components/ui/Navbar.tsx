@@ -67,7 +67,7 @@ const menuData = [
       {
         title: "Resources",
         children: [
-          { label: "Rent with NestifyBD", href: "/rent/resources/rent-with-nestifybd" },
+          { label: "Rent with EstateAgent", href: "/rent/resources/rent-with-nestifybd" },
           { label: "Build your credit", href: "/rent/resources/credit" },
           { label: "Renters insurance", href: "/rent/resources/insurance" },
           { label: "Affordability calculator", href: "/rent/resources/affordability" },
@@ -172,14 +172,16 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex-shrink-0 flex items-center h-full">
           <Link href="/" className="block h-full flex items-center">
-            <Image
+            {/* <Image
               src="/logo1.jpeg"
-              alt={t("logoAlt", "NestifyBD Logo")}
+              alt={t("logoAlt", "EstateAgent Logo")}
               width={150}
               height={150}
               className="object-contain max-h-full"
               priority
-            />
+            /> */}
+            <span className="text-xl font-semibold text-black ml-2">EstateAgent</span>
+
           </Link>
         </div>
 

@@ -11,7 +11,7 @@ export default function CTASection() {
           Ready to Find Your Dream Property?
         </h2>
         <p className="text-lg text-white/90 mb-8 leading-relaxed">
-          Join thousands of satisfied customers who found their perfect home or investment property through NestifyBD. Let our experts guide you through every step of your real estate journey.
+          Join thousands of satisfied customers who found their perfect home or investment property through EstateAgent. Let our experts guide you through every step of your real estate journey.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <Button variant="gradient" size="lg" href="/properties" className="font-bold text-zinc-800 transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-[#2a6071]">

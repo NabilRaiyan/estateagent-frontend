@@ -88,16 +88,16 @@ export const AboutComponent = () => {
                 {/* Right Column: Paragraph Text */}
                 <div className="flex flex-col gap-6 text-gray-600 leading-relaxed">
                     <p data-aos="fade-up">
-                        At NestifyBD, we believe finding the right property should be simple, transparent, and inspiring. Our modern real estate template kit is built to empower agencies, agents, and property professionals with sleek designs, intuitive layouts, and powerful features.
+                        At EstateAgent, we believe finding the right property should be simple, transparent, and inspiring. Our modern real estate template kit is built to empower agencies, agents, and property professionals with sleek designs, intuitive layouts, and powerful features.
                     </p>
                     <p data-aos="fade-up" data-aos-delay="100">
-                        From showcasing listings to connecting with clients, NestifyBD helps you build trust, highlight properties, and create a seamless experience for your audience. We combine style with functionality, ensuring every website built on NestifyBD feels professional, modern, and client-focused.
+                        From showcasing listings to connecting with clients, EstateAgent helps you build trust, highlight properties, and create a seamless experience for your audience. We combine style with functionality, ensuring every website built on EstateAgent feels professional, modern, and client-focused.
                     </p>
                     <p data-aos="fade-up" data-aos-delay="200">
-                        NestifyBD isn&apos;t just another template kit it&apos;s a complete design solution for the real estate world. Built with precision and creativity, NestifyBD empowers property agencies, realtors, and brokers to stand out with modern, high-performing websites.
+                        EstateAgent isn&apos;t just another template kit it&apos;s a complete design solution for the real estate world. Built with precision and creativity, EstateAgent empowers property agencies, realtors, and brokers to stand out with modern, high-performing websites.
                     </p>
                     <p data-aos="fade-up" data-aos-delay="300">
-                        We understand that real estate is more than just buying and selling properties it&apos;s about trust, lifestyle, and creating connections. That&apos;s why NestifyBD combines sleek aesthetics with smart functionality, helping you display listings beautifully, highlight agents professionally, and engage clients with ease.
+                        We understand that real estate is more than just buying and selling properties it&apos;s about trust, lifestyle, and creating connections. That&apos;s why EstateAgent combines sleek aesthetics with smart functionality, helping you display listings beautifully, highlight agents professionally, and engage clients with ease.
                     </p>
                 </div>
             </div>

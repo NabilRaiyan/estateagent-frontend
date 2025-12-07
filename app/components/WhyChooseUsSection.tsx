@@ -54,7 +54,7 @@ export default function WhyChooseUsSection() {
   return (
     <section className="py-16 bg-white text-zinc-800">
       <div className="max-w-4xl mx-auto text-center px-4 mb-12">
-        <h2 className="text-5xl font-bold mb-4">Why Choose NestifyBD?</h2>
+        <h2 className="text-5xl font-bold mb-4">Why Choose EstateAgent?</h2>
         <p className="text-xl text-zinc-600 max-w-3xl mx-auto leading-relaxed">
           With over 10 years of experience in Bangladesh&apos;s real estate market, we&apos;re committed to providing exceptional service and helping you make informed property decisions.
         </p>

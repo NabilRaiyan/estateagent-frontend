@@ -23,7 +23,7 @@
   "Inbox": "Inbox",
   "Contacted rentals": "Contacted rentals",
   "Applications": "Applications",
-  "Rent with NestifyBD": "Rent with NestifyBD",
+  "Rent with EstateAgent": "Rent with EstateAgent",
   "Build your credit": "Build your credit",
   "Renters insurance": "Renters insurance",
   "Affordability calculator": "Affordability calculator",
@@ -50,7 +50,7 @@
   "বাংলা": "বাংলা",
   "Toggle mobile menu": "Toggle mobile menu",
   "Toggle language": "Toggle language",
-  "logoAlt": "NestifyBD Logo",
+  "logoAlt": "EstateAgent Logo",
 
   "hero": {
     "mainTitle": "Find Your Dream Property",

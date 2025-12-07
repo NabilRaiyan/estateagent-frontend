@@ -12,7 +12,7 @@ import { MediaAndTextComponent, MediaAndTextComponentProps } from "../components
 const missionData: MediaAndTextComponentProps = {
     image: "/our-mission.jpg",
     missionTitle: "Our Mission",
-    missionDescription: "At NestifyBD, our mission is to simplify real estate design by offering sleek, modern, and customizable website solutions that empower agencies, agents, and property professionals to thrive online...",
+    missionDescription: "At EstateAgent, our mission is to simplify real estate design by offering sleek, modern, and customizable website solutions that empower agencies, agents, and property professionals to thrive online...",
     stats: [
         { number: "30K+", label: "Happy Customers", description: "Lorem ipsum dolor sit amet conse ctetur." },
         { number: "28K+", label: "Top Property", description: "Lorem ipsum dolor sit amet conse ctetur." },
